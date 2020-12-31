@@ -13,7 +13,7 @@ public class Main {
 				frame.setContentPane(new Background(800, 600));
 				frame.pack();
 				frame.setVisible(true);
-				frame.setResizable(true);
+				frame.setResizable(false);
 			}
 		});
 	}
