@@ -13,7 +13,7 @@ public class Infected {
     this.y = y;
   }
 
-  public void draw(Graphics g) {
+  public void render(Graphics g) {
     g.setColor(Color.BLUE);
     g.fillOval((int) this.x, (int) this.y, 20, 20);
   }

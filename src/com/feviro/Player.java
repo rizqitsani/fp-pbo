@@ -17,7 +17,7 @@ public class Player {
     this.height = 10;
   }
 
-  public void draw(Graphics g) {
+  public void render(Graphics g) {
     g.setColor(Color.RED);
     g.fillRect((int) this.x, (int) this.y, (int) this.width, (int) this.height);
   }
