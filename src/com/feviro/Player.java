@@ -2,14 +2,15 @@ package com.feviro;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.List;
 
 public class Player {
-
   private float x, y;
   private float width, height;
   private float baseSpeed;
   private float speedX;
   private float speedY;
+  private Color color;
 
   public Player(float x, float y, float baseSpeed) {
     this.x = x;
@@ -17,17 +18,21 @@ public class Player {
     this.baseSpeed = baseSpeed;
     this.width = 10;
     this.height = 10;
+    this.color = Color.RED;
   }
 
-  public void tick(GameArea area) {
-    x += (speedX * baseSpeed);
-    y += (speedY * baseSpeed);
+  public void tick(GameArea area, List<Infected> infectedList) {
+    this.x += (speedX * baseSpeed);
+    this.y += (speedY * baseSpeed);
 
     collision(area);
+    for (Infected infected : infectedList) {
+      collision(infected);
+    }
   }
 
   public void render(Graphics g) {
-    g.setColor(Color.RED);
+    g.setColor(this.color);
     g.fillRect((int) this.x, (int) this.y, (int) this.width, (int) this.height);
   }
 
@@ -55,11 +60,15 @@ public class Player {
     this.speedY = 0;
   }
 
+  public void shoot(List<Bullet> list) {
+    list.add(new Bullet(this.x, this.y, 5, 5, -90, Color.RED));
+  }
+
   public void collision(GameArea area) {
     float playerMinX = area.minX;
     float playerMinY = area.minY;
-    float playerMaxX = area.maxX - this.width;
-    float playerMaxY = area.maxY - this.height;
+    float playerMaxX = area.maxX;
+    float playerMaxY = area.maxY;
 
     if (this.x < playerMinX) {
       this.x = playerMinX;
@@ -71,6 +80,24 @@ public class Player {
       this.y = playerMinY;
     } else if (this.y > playerMaxY) {
       this.y = playerMaxY;
+    }
+  }
+
+  public void collision(Infected infected) {
+    float playerMinX = infected.minX - this.width;
+    float playerMinY = infected.minY - this.height;
+    float playerMaxX = infected.maxX + this.width;
+    float playerMaxY = infected.maxY + this.height;
+
+    // System.out.println(playerMinX + " " + playerMinY + " " + playerMaxX + " " +
+    // playerMaxY + " vs " + this.x + " " + this.y);
+    // System.out.println(String.valueOf(this.x > playerMinX) + " " +
+    // String.valueOf(this.x < playerMaxX) + " " + String.valueOf(this.y >
+    // playerMinY) + " " + String.valueOf(this.y < playerMaxY));
+    if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
+      this.color = Color.YELLOW;
+    } else {
+      this.color = Color.RED;
     }
   }
 

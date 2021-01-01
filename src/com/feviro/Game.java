@@ -23,6 +23,7 @@ public class Game extends JPanel implements Runnable {
 	private Player player;
 	private List<Infected> infectedList = new ArrayList<Infected>();
 	private List<Virus> virusList = new ArrayList<Virus>();
+	private List<Bullet> bulletList = new ArrayList<Bullet>();
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -118,7 +119,11 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void tick() {
-		player.tick(area);
+		player.tick(area, infectedList);
+
+		for (Bullet bullet : bulletList) {
+			bullet.tick(area);
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -144,6 +149,8 @@ public class Game extends JPanel implements Runnable {
 			player.moveXStop();
 		} else if (key == KeyEvent.VK_DOWN) {
 			player.moveYStop();
+		} else if (key == KeyEvent.VK_SPACE) {
+			player.shoot(bulletList);
 		}
 	}
 
@@ -159,6 +166,10 @@ public class Game extends JPanel implements Runnable {
 
 		for (Virus virus : virusList) {
 			virus.render(g);
+		}
+
+		for (Bullet bullet : bulletList) {
+			bullet.render(g);
 		}
 	}
 
