@@ -5,16 +5,25 @@ import java.awt.Graphics;
 
 public class Player {
 
-  float x, y;
-  float width, height;
-  float speed;
+  private float x, y;
+  private float width, height;
+  private float baseSpeed;
+  private float speedX;
+  private float speedY;
 
-  public Player(float x, float y, float speed) {
+  public Player(float x, float y, float baseSpeed) {
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    this.baseSpeed = baseSpeed;
     this.width = 10;
     this.height = 10;
+  }
+
+  public void tick(GameArea area) {
+    x += (speedX * baseSpeed);
+    y += (speedY * baseSpeed);
+
+    collision(area);
   }
 
   public void render(Graphics g) {
@@ -23,19 +32,27 @@ public class Player {
   }
 
   public void moveLeft() {
-    this.x -= speed;
+    this.speedX = -1;
   }
 
   public void moveUp() {
-    this.y -= speed;
+    this.speedY = -1;
   }
 
   public void moveRight() {
-    this.x += speed;
+    this.speedX = 1;
   }
 
   public void moveDown() {
-    this.y += speed;
+    this.speedY = 1;
+  }
+
+  public void moveXStop() {
+    this.speedX = 0;
+  }
+
+  public void moveYStop() {
+    this.speedY = 0;
   }
 
   public void collision(GameArea area) {

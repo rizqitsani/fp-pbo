@@ -15,29 +15,29 @@ public class Game extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private int width;
 	private int height;
-	
+
 	private boolean running = false;
 	private Thread thread;
-	
+
 	private GameArea area;
 	private Player player;
 	private List<Infected> infectedList = new ArrayList<Infected>();
 	private List<Virus> virusList = new ArrayList<Virus>();
-	
+
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
-		
+
 		this.setPreferredSize(new Dimension(width, height));
 		this.setMaximumSize(new Dimension(width, height));
 		this.setMinimumSize(new Dimension(width, height));
-		
+
 		this.addKeyListener(new KeyInput(this));
 		this.setFocusable(true);
-		
+
 		start();
 	}
-	
+
 	public void init() {
 		this.player = new Player(width / 2, height - 40, 5);
 
@@ -57,91 +57,100 @@ public class Game extends JPanel implements Runnable {
 			virusList.add(new Virus(x, y));
 		}
 	}
-	
+
 	public synchronized void start() {
-		if(running)
+		if (running)
 			return;
-		
+
 		running = true;
 		thread = new Thread(this);
 		thread.start();
 	}
-	
+
 	public synchronized void stop() {
-		if(!running)
+		if (!running)
 			return;
-		
+
 		running = false;
-		
+
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.exit(1);
 	}
-	
+
 	public void run() {
 		init();
-		
+
 		long lastTime = System.nanoTime();
 		final double FPS = 60;
 		double ns = 1000000000 / FPS;
 		double delta = 0;
-		
+
 		int updates = 0;
 		int frames = 0;
 		long timer = System.currentTimeMillis();
-		
-		while(running) {
+
+		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			if(delta >= 1) {
+			if (delta >= 1) {
 				tick();
 				updates++;
 				delta--;
 			}
 			repaint();
 			frames++;
-			
-			if(System.currentTimeMillis() - timer > 1000) {
+
+			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println(updates + "Ticks, FPS: " + frames);
 				updates = 0;
 				frames = 0;
 			}
 		}
-		
+
 		stop();
 	}
-	
+
 	private void tick() {
-		player.collision(area);
+		player.tick(area);
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_RIGHT) {
-			player.moveRight();
-		} else if(key == KeyEvent.VK_UP) {
-			player.moveUp();
-		} else if(key == KeyEvent.VK_DOWN) {
-			player.moveDown();
-		} else if(key == KeyEvent.VK_LEFT) {
+		if (key == KeyEvent.VK_LEFT) {
 			player.moveLeft();
+		} else if (key == KeyEvent.VK_UP) {
+			player.moveUp();
+		} else if (key == KeyEvent.VK_RIGHT) {
+			player.moveRight();
+		} else if (key == KeyEvent.VK_DOWN) {
+			player.moveDown();
 		}
 	}
-	
+
 	public void keyReleased(KeyEvent e) {
-		
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_LEFT) {
+			player.moveXStop();
+		} else if (key == KeyEvent.VK_UP) {
+			player.moveYStop();
+		} else if (key == KeyEvent.VK_RIGHT) {
+			player.moveXStop();
+		} else if (key == KeyEvent.VK_DOWN) {
+			player.moveYStop();
+		}
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		player.render(g);
 
 		for (Infected infected : infectedList) {
