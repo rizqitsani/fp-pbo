@@ -5,12 +5,13 @@ import java.awt.Graphics;
 import java.util.List;
 
 public class Player {
-  private float x, y;
+  private static float x, y;
   private float width, height;
   private float baseSpeed;
   private float speedX;
   private float speedY;
   private Color color;
+  private int health;
 
   public Player(float x, float y, float baseSpeed) {
     this.x = x;
@@ -19,21 +20,40 @@ public class Player {
     this.width = 10;
     this.height = 10;
     this.color = Color.RED;
+    this.health = 100;
   }
 
   public void tick(GameArea area, List<Infected> infectedList) {
     this.x += (speedX * baseSpeed);
     this.y += (speedY * baseSpeed);
 
-    collision(area);
+    this.collision(area);
     for (Infected infected : infectedList) {
-      collision(infected);
+      this.collision(infected);
     }
+    
+    checkIsLive();
   }
-
+  
+  public void checkIsLive() {
+	  if(this.health <= 0) {
+		  this.color = Color.BLACK;
+	  }
+  }
+  
+  public static float getX() {
+	  return x;
+  }
+  
+  public static float getY() {
+	  return y;
+  }
+  
   public void render(Graphics g) {
     g.setColor(this.color);
     g.fillRect((int) this.x, (int) this.y, (int) this.width, (int) this.height);
+    g.setColor(Color.BLACK);
+    g.drawString(String.valueOf(health), (int) this.x, (int) this.y - 10);
   }
 
   public void moveLeft() {
@@ -88,16 +108,9 @@ public class Player {
     float playerMinY = infected.minY - this.height;
     float playerMaxX = infected.maxX + this.width;
     float playerMaxY = infected.maxY + this.height;
-
-    // System.out.println(playerMinX + " " + playerMinY + " " + playerMaxX + " " +
-    // playerMaxY + " vs " + this.x + " " + this.y);
-    // System.out.println(String.valueOf(this.x > playerMinX) + " " +
-    // String.valueOf(this.x < playerMaxX) + " " + String.valueOf(this.y >
-    // playerMinY) + " " + String.valueOf(this.y < playerMaxY));
+    
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
-      this.color = Color.YELLOW;
-    } else {
-      this.color = Color.RED;
+      this.health -= 1; 
     }
   }
 

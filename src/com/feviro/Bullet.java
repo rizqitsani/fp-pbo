@@ -2,6 +2,7 @@ package com.feviro;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.List;
 
 public class Bullet {
 	float x, y;
@@ -19,10 +20,7 @@ public class Bullet {
 	}
 
 	public void tick(GameArea area) {
-		this.x += speedX;
-		this.y += speedY;
-
-		collision(area);
+		this.move();
 	}
 
 	public void render(Graphics g) {
@@ -30,11 +28,11 @@ public class Bullet {
 		g.fillOval((int) (x - radius), (int) (y - radius), (int) (2 * radius), (int) (2 * radius));
 	}
 
-	private void flipDirectionX() {
+	public void flipDirectionX() {
 		speedX = -speedX;
 	}
 
-	private void flipDirectionY() {
+	public void flipDirectionY() {
 		speedY = -speedY;
 	}
 
@@ -43,29 +41,17 @@ public class Bullet {
 		this.y += this.speedY;
 	}
 
-	public void collision(GameArea box) {
+	public boolean collision(GameArea box) {
 		float bulletMinX = box.minX + radius;
 		float bulletMinY = box.minY + radius;
-		float bulletMaxX = box.maxX - radius;
-		float bulletMaxY = box.maxY - radius;
+		float bulletMaxX = box.maxX + radius;
+		float bulletMaxY = box.maxY + radius;
 
-		this.move();
-
-		if (x < bulletMinX) {
-			flipDirectionX();
-			x = bulletMinX;
-		} else if (x > bulletMaxX) {
-			flipDirectionX();
-			x = bulletMaxX;
+		if (x < bulletMinX || x > bulletMaxX || y < bulletMinY || y > bulletMaxY) {
+			return true;
 		}
-
-		if (y < bulletMinY) {
-			flipDirectionY();
-			y = bulletMinY;
-		} else if (y > bulletMaxY) {
-			flipDirectionY();
-			y = bulletMaxY;
-		}
+		
+		return false;
 	}
 
 	// public void collide(Ball anotherBall) {
