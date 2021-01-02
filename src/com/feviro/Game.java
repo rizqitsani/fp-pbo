@@ -23,6 +23,7 @@ public class Game extends JPanel implements Runnable {
 	private Player player;
 	private List<Infected> infectedList = new ArrayList<Infected>();
 	private List<Virus> virusList = new ArrayList<Virus>();
+	private List<Bullet> bulletList = new ArrayList<Bullet>();
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -54,7 +55,7 @@ public class Game extends JPanel implements Runnable {
 			Random random = new Random();
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;
-			virusList.add(new Virus(x, y));
+			virusList.add(new Virus(x, y, 1));
 		}
 	}
 
@@ -108,7 +109,7 @@ public class Game extends JPanel implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println(updates + "Ticks, FPS: " + frames);
+				System.out.println(updates + " Ticks, FPS: " + frames);
 				updates = 0;
 				frames = 0;
 			}
@@ -118,7 +119,15 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void tick() {
-		player.tick(area);
+		player.tick(area, infectedList);
+
+		for (Bullet bullet : bulletList) {
+			bullet.tick(area);
+		}
+		
+		for (Virus virus : virusList) {
+			virus.tick(player);
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -144,6 +153,8 @@ public class Game extends JPanel implements Runnable {
 			player.moveXStop();
 		} else if (key == KeyEvent.VK_DOWN) {
 			player.moveYStop();
+		} else if (key == KeyEvent.VK_SPACE) {
+			player.shoot(bulletList);
 		}
 	}
 
@@ -157,8 +168,20 @@ public class Game extends JPanel implements Runnable {
 			infected.render(g);
 		}
 
-		for (Virus virus : virusList) {
-			virus.render(g);
+		for (int i = 0; i < virusList.size(); i++) {
+			for (int j = 0; j < bulletList.size(); j++) {
+				if(virusList.get(i).collision(bulletList.get(j))) {
+					bulletList.remove(j);
+				}
+			}
+			virusList.get(i).render(g);
+		}
+
+		for (int i = 0; i < bulletList.size(); i++) {
+			if(bulletList.get(i).collision(area)) {
+				bulletList.remove(i);
+			}
+			bulletList.get(i).render(g);
 		}
 	}
 
