@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,8 +14,8 @@ import javax.swing.JPanel;
 public class Game extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	private int width;
-	private int height;
+	private int width = 800;
+	private int height = 600;
 
 	private boolean running = false;
 	private Thread thread;
@@ -24,6 +25,9 @@ public class Game extends JPanel implements Runnable {
 	private List<Infected> infectedList = new ArrayList<Infected>();
 	private List<Virus> virusList = new ArrayList<Virus>();
 	private List<Bullet> bulletList = new ArrayList<Bullet>();
+	private Textures textures;
+
+	private List<BufferedImage> spriteSheet = new ArrayList<BufferedImage>();
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -40,7 +44,15 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	public void init() {
-		this.player = new Player(width / 2, height - 40, 5);
+
+		BufferedImageLoader loader = new BufferedImageLoader();
+		spriteSheet.add(loader.loadImage("/dante_0.png"));
+		spriteSheet.add(loader.loadImage("/virus.png"));
+		spriteSheet.add(loader.loadImage("/george.png"));
+
+		textures = new Textures(this);
+
+		this.player = new Player(width / 2, height - 40, 5, textures);
 
 		this.area = new GameArea(0, 0, width, height, Color.BLACK, Color.WHITE);
 
@@ -48,14 +60,14 @@ public class Game extends JPanel implements Runnable {
 			Random random = new Random();
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;
-			infectedList.add(new Infected(x, y));
+			infectedList.add(new Infected(x, y, textures));
 		}
 
 		for (int i = 0; i < 5; i++) {
 			Random random = new Random();
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;
-			virusList.add(new Virus(x, y, 1));
+			virusList.add(new Virus(x, y, 1, textures));
 		}
 	}
 
@@ -124,7 +136,7 @@ public class Game extends JPanel implements Runnable {
 		for (Bullet bullet : bulletList) {
 			bullet.tick(area);
 		}
-		
+
 		for (Virus virus : virusList) {
 			virus.tick(player);
 		}
@@ -170,7 +182,7 @@ public class Game extends JPanel implements Runnable {
 
 		for (int i = 0; i < virusList.size(); i++) {
 			for (int j = 0; j < bulletList.size(); j++) {
-				if(virusList.get(i).collision(bulletList.get(j))) {
+				if (virusList.get(i).collision(bulletList.get(j))) {
 					bulletList.remove(j);
 				}
 			}
@@ -178,11 +190,15 @@ public class Game extends JPanel implements Runnable {
 		}
 
 		for (int i = 0; i < bulletList.size(); i++) {
-			if(bulletList.get(i).collision(area)) {
+			if (bulletList.get(i).collision(area)) {
 				bulletList.remove(i);
 			}
 			bulletList.get(i).render(g);
 		}
+	}
+
+	public List<BufferedImage> getSpriteSheet() {
+		return spriteSheet;
 	}
 
 }

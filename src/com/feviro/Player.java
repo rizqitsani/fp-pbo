@@ -4,23 +4,25 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
-public class Player {
-  private static float x, y;
+public class Player extends Sprite {
+  private float x, y;
   private float width, height;
   private float baseSpeed;
   private float speedX;
   private float speedY;
-  private Color color;
   private int health;
 
-  public Player(float x, float y, float baseSpeed) {
+  private Textures textures;
+
+  public Player(float x, float y, float baseSpeed, Textures textures) {
     this.x = x;
     this.y = y;
     this.baseSpeed = baseSpeed;
     this.width = 10;
     this.height = 10;
-    this.color = Color.RED;
     this.health = 100;
+
+    this.textures = textures;
   }
 
   public void tick(GameArea area, List<Infected> infectedList) {
@@ -31,29 +33,26 @@ public class Player {
     for (Infected infected : infectedList) {
       this.collision(infected);
     }
-    
+
     checkIsLive();
   }
-  
+
   public void checkIsLive() {
-	  if(this.health <= 0) {
-		  this.color = Color.BLACK;
-	  }
+    if (this.health <= 0) {
+      // TODO ubah kondisi
+    }
   }
-  
-  public static float getX() {
-	  return x;
+
+  public float getX() {
+    return x;
   }
-  
-  public static float getY() {
-	  return y;
+
+  public float getY() {
+    return y;
   }
-  
+
   public void render(Graphics g) {
-    g.setColor(this.color);
-    g.fillRect((int) this.x, (int) this.y, (int) this.width, (int) this.height);
-    g.setColor(Color.BLACK);
-    g.drawString(String.valueOf(health), (int) this.x, (int) this.y - 10);
+    g.drawImage(textures.player, (int) this.x, (int) this.y, null);
   }
 
   public void moveLeft() {
@@ -108,9 +107,9 @@ public class Player {
     float playerMinY = infected.minY - this.height;
     float playerMaxX = infected.maxX + this.width;
     float playerMaxY = infected.maxY + this.height;
-    
+
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
-      this.health -= 1; 
+      this.health -= 1;
     }
   }
 

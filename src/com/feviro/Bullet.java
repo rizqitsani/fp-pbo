@@ -2,7 +2,6 @@ package com.feviro;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.List;
 
 public class Bullet {
 	float x, y;
@@ -50,7 +49,7 @@ public class Bullet {
 		if (x < bulletMinX || x > bulletMaxX || y < bulletMinY || y > bulletMaxY) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
