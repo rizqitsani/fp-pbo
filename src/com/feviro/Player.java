@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
-public class Player extends Sprite {
+import com.feviro.gfx.Textures;
+
+public class Player {
   private float x, y;
   private float width, height;
   private float baseSpeed;
@@ -12,17 +14,13 @@ public class Player extends Sprite {
   private float speedY;
   private int health;
 
-  private Textures textures;
-
-  public Player(float x, float y, float baseSpeed, Textures textures) {
+  public Player(float x, float y, float baseSpeed) {
     this.x = x;
     this.y = y;
     this.baseSpeed = baseSpeed;
     this.width = 10;
     this.height = 10;
     this.health = 100;
-
-    this.textures = textures;
   }
 
   public void tick(GameArea area, List<Infected> infectedList) {
@@ -52,7 +50,7 @@ public class Player extends Sprite {
   }
 
   public void render(Graphics g) {
-    g.drawImage(textures.player, (int) this.x, (int) this.y, null);
+    g.drawImage(Textures.player, (int) this.x, (int) this.y, null);
   }
 
   public void moveLeft() {

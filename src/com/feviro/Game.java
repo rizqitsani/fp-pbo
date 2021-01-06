@@ -1,15 +1,14 @@
 package com.feviro;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import javax.swing.JPanel;
+
+import com.feviro.gfx.Textures;
+import com.feviro.states.GameState;
+import com.feviro.states.MenuState;
+import com.feviro.states.State;
 
 public class Game extends JPanel implements Runnable {
 
@@ -19,16 +18,11 @@ public class Game extends JPanel implements Runnable {
 
 	private boolean running = false;
 	private Thread thread;
-
-	private GameArea area;
-	private Player player;
-	private List<Infected> infectedList = new ArrayList<Infected>();
-	private List<Virus> virusList = new ArrayList<Virus>();
-	private List<Bullet> bulletList = new ArrayList<Bullet>();
-	private Textures textures;
-
-	private List<BufferedImage> spriteSheet = new ArrayList<BufferedImage>();
-
+	
+	//States
+	private State gameState;
+	private State menuState;
+	
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -37,38 +31,21 @@ public class Game extends JPanel implements Runnable {
 		this.setMaximumSize(new Dimension(width, height));
 		this.setMinimumSize(new Dimension(width, height));
 
-		this.addKeyListener(new KeyInput(this));
+		this.addKeyListener(new KeyInput());
 		this.setFocusable(true);
 
 		start();
 	}
 
 	public void init() {
+		Textures.init();
+		
+		gameState = new GameState(this);
+		menuState = new MenuState(this);
+		
+		State.setCurrentState(menuState);
 
-		BufferedImageLoader loader = new BufferedImageLoader();
-		spriteSheet.add(loader.loadImage("/dante_0.png"));
-		spriteSheet.add(loader.loadImage("/virus.png"));
-		spriteSheet.add(loader.loadImage("/george.png"));
-
-		textures = new Textures(this);
-
-		this.player = new Player(width / 2, height - 40, 5, textures);
-
-		this.area = new GameArea(0, 0, width, height, Color.BLACK, Color.WHITE);
-
-		for (int i = 0; i < 2; i++) {
-			Random random = new Random();
-			int x = random.nextInt(300) + 40;
-			int y = random.nextInt(300) + 40;
-			infectedList.add(new Infected(x, y, textures));
-		}
-
-		for (int i = 0; i < 5; i++) {
-			Random random = new Random();
-			int x = random.nextInt(300) + 40;
-			int y = random.nextInt(300) + 40;
-			virusList.add(new Virus(x, y, 1, textures));
-		}
+		
 	}
 
 	public synchronized void start() {
@@ -131,74 +108,36 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void tick() {
-		player.tick(area, infectedList);
-
-		for (Bullet bullet : bulletList) {
-			bullet.tick(area);
-		}
-
-		for (Virus virus : virusList) {
-			virus.tick(player);
+		if(State.getCurrentState() != null) {
+			State.getCurrentState().tick();
 		}
 	}
-
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_LEFT) {
-			player.moveLeft();
-		} else if (key == KeyEvent.VK_UP) {
-			player.moveUp();
-		} else if (key == KeyEvent.VK_RIGHT) {
-			player.moveRight();
-		} else if (key == KeyEvent.VK_DOWN) {
-			player.moveDown();
-		}
-	}
-
-	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_LEFT) {
-			player.moveXStop();
-		} else if (key == KeyEvent.VK_UP) {
-			player.moveYStop();
-		} else if (key == KeyEvent.VK_RIGHT) {
-			player.moveXStop();
-		} else if (key == KeyEvent.VK_DOWN) {
-			player.moveYStop();
-		} else if (key == KeyEvent.VK_SPACE) {
-			player.shoot(bulletList);
-		}
-	}
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		player.render(g);
-
-		for (Infected infected : infectedList) {
-			infected.render(g);
-		}
-
-		for (int i = 0; i < virusList.size(); i++) {
-			for (int j = 0; j < bulletList.size(); j++) {
-				if (virusList.get(i).collision(bulletList.get(j))) {
-					bulletList.remove(j);
-				}
-			}
-			virusList.get(i).render(g);
-		}
-
-		for (int i = 0; i < bulletList.size(); i++) {
-			if (bulletList.get(i).collision(area)) {
-				bulletList.remove(i);
-			}
-			bulletList.get(i).render(g);
+		
+		if(State.getCurrentState() != null) {
+			State.getCurrentState().render(g);
 		}
 	}
 
-	public List<BufferedImage> getSpriteSheet() {
-		return spriteSheet;
+	public int getWidth() {
+		return width;
 	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public State getGameState() {
+		return gameState;
+	}
+
+	public State getMenuState() {
+		return menuState;
+	}
+
+	
 
 }

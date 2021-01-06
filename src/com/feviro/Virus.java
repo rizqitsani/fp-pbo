@@ -3,7 +3,9 @@ package com.feviro;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Virus extends Sprite {
+import com.feviro.gfx.Textures;
+
+public class Virus {
 
 	private float x, y;
 	private int width, height;
@@ -12,9 +14,7 @@ public class Virus extends Sprite {
 	private int health;
 	private Color color;
 
-	private Textures textures;
-
-	public Virus(float x, float y, float baseSpeed, Textures textures) {
+	public Virus(float x, float y, float baseSpeed) {
 		this.setX(x);
 		this.y = y;
 		this.baseSpeed = baseSpeed;
@@ -22,12 +22,10 @@ public class Virus extends Sprite {
 		this.setHeight(20);
 		this.health = 30;
 		this.setColor(Color.GREEN);
-
-		this.textures = textures;
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(textures.virus, (int) this.x, (int) this.y, null);
+		g.drawImage(Textures.virus, (int) this.x, (int) this.y, null);
 	}
 
 	public void tick(Player player) {

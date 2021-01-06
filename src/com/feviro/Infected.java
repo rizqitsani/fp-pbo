@@ -2,6 +2,8 @@ package com.feviro;
 
 import java.awt.Graphics;
 
+import com.feviro.gfx.Textures;
+
 public class Infected {
 
   float x;
@@ -9,9 +11,7 @@ public class Infected {
   float minX, minY, maxX, maxY;
   int width, height, radius;
 
-  private Textures textures;
-
-  public Infected(float x, float y, Textures textures) {
+  public Infected(float x, float y) {
     this.x = x;
     this.y = y;
     this.width = 20;
@@ -21,12 +21,10 @@ public class Infected {
     this.minY = y - this.radius;
     this.maxX = x + this.width - 1 + this.radius;
     this.maxY = y + this.height - 1 + this.radius;
-
-    this.textures = textures;
   }
 
   public void render(Graphics g) {
-    g.drawImage(textures.infected, (int) this.x, (int) this.y, null);
+    g.drawImage(Textures.infected, (int) this.x, (int) this.y, null);
   }
 
 }
