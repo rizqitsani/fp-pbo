@@ -1,8 +1,9 @@
 package com.feviro;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
+import com.feviro.gfx.Animation;
 import com.feviro.gfx.Textures;
 
 public class Virus {
@@ -12,7 +13,9 @@ public class Virus {
 	private float speedX, speedY;
 	private float baseSpeed;
 	private int health;
-	private Color color;
+	
+	// Animations
+	private Animation virusHit;
 
 	public Virus(float x, float y, float baseSpeed) {
 		this.setX(x);
@@ -21,14 +24,15 @@ public class Virus {
 		this.setWidth(20);
 		this.setHeight(20);
 		this.health = 30;
-		this.setColor(Color.GREEN);
+		
+		// Animations
+		virusHit = new Animation(250, Textures.virusHit);
 	}
-
-	public void render(Graphics g) {
-		g.drawImage(Textures.virus, (int) this.x, (int) this.y, null);
-	}
-
+	
 	public void tick(Player player) {
+		if(checkIsLive())
+			virusHit.tick();
+		
 		this.setX(this.getX() + (speedX * baseSpeed));
 		this.setY(this.getY() + (speedY * baseSpeed));
 
@@ -40,9 +44,19 @@ public class Virus {
 		}
 	}
 
+	public void render(Graphics g) {
+		g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, null);
+	}
+	
+	private BufferedImage getCurrentAnimationFrame() {
+		if(checkIsLive())
+			return virusHit.getCurrentFrame();
+		else
+			return Textures.virusDead;
+	}
+
 	public boolean checkIsLive() {
 		if (this.health <= 0) {
-			this.setColor(Color.BLACK);
 			return false;
 		}
 		return true;
@@ -145,13 +159,5 @@ public class Virus {
 
 	public void setHeight(int height) {
 		this.height = height;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
 	}
 }
