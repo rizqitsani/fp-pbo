@@ -1,4 +1,4 @@
-package com.feviro;
+package com.feviro.objects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -26,7 +26,7 @@ public class Virus {
 		this.health = 30;
 
 		// Animations
-		virusHit = new Animation(250, Textures.virusHit);
+		virusHit = new Animation(100, Textures.virusHit);
 	}
 
 	public void tick(Player player) {
@@ -104,10 +104,10 @@ public class Virus {
 	}
 
 	public boolean collision(Bullet bullet) {
-		float virusMinX = this.getX() + bullet.radius;
-		float virusMinY = this.getY() + bullet.radius;
-		float virusMaxX = this.getX() + this.getWidth() - bullet.radius;
-		float virusMaxY = this.getY() + this.getHeight() - bullet.radius;
+		float virusMinX = this.getX() + bullet.getRadius();
+		float virusMinY = this.getY() + bullet.getRadius();
+		float virusMaxX = this.getX() + this.getWidth() - bullet.getRadius();
+		float virusMaxY = this.getY() + this.getHeight() - bullet.getRadius();
 
 		float virusCenterX = this.getX() + (this.getWidth() / 2);
 		float virusCenterY = this.getY() + (this.getHeight() / 2);

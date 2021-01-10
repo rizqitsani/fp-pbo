@@ -1,17 +1,17 @@
-package com.feviro;
+package com.feviro.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Bullet {
-	float x, y;
-	float speedX, speedY;
-	float radius;
+import com.feviro.GameArea;
+
+public class Bullet extends GameObject {
+	private float speedX, speedY;
+	private float radius;
 	private Color color;
 
 	public Bullet(float x, float y, float radius, float speed, float angleInDegree, Color color) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		this.speedX = (float) (speed * Math.cos(Math.toRadians(angleInDegree)));
 		this.speedY = (float) (speed * Math.sin(Math.toRadians(angleInDegree)));
 		this.radius = radius;
@@ -41,16 +41,20 @@ public class Bullet {
 	}
 
 	public boolean collision(GameArea box) {
-		float bulletMinX = box.minX + radius;
-		float bulletMinY = box.minY + radius;
-		float bulletMaxX = box.maxX + radius;
-		float bulletMaxY = box.maxY + radius;
+		float bulletMinX = box.getMinX() + radius;
+		float bulletMinY = box.getMinY() + radius;
+		float bulletMaxX = box.getMaxX() + radius;
+		float bulletMaxY = box.getMaxY() + radius;
 
 		if (x < bulletMinX || x > bulletMaxX || y < bulletMinY || y > bulletMaxY) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public float getRadius() {
+		return radius;
 	}
 
 	// public void collide(Ball anotherBall) {

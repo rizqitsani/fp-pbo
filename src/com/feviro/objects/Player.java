@@ -1,15 +1,15 @@
-package com.feviro;
+package com.feviro.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.feviro.GameArea;
 import com.feviro.gfx.Animation;
 import com.feviro.gfx.Textures;
 
-public class Player {
-  private float x, y;
+public class Player extends GameObject {
   private float width, height;
   private float baseSpeed;
   private float speedX;
@@ -24,8 +24,7 @@ public class Player {
   private Animation animRight;
 
   public Player(float x, float y, float baseSpeed) {
-    this.x = x;
-    this.y = y;
+    super(x, y);
     this.baseSpeed = baseSpeed;
     this.width = 10;
     this.height = 10;
@@ -36,7 +35,7 @@ public class Player {
     animDown = new Animation(250, Textures.playerDown);
     animLeft = new Animation(250, Textures.playerLeft);
     animRight = new Animation(250, Textures.playerRight);
-    
+
     currentAnim = animUp;
   }
 
@@ -118,10 +117,10 @@ public class Player {
   }
 
   public void collision(GameArea area) {
-    float playerMinX = area.minX;
-    float playerMinY = area.minY;
-    float playerMaxX = area.maxX;
-    float playerMaxY = area.maxY;
+    float playerMinX = area.getMinX();
+    float playerMinY = area.getMinY();
+    float playerMaxX = area.getMaxX();
+    float playerMaxY = area.getMaxY();
 
     if (this.x < playerMinX) {
       this.x = playerMinX;
@@ -137,26 +136,26 @@ public class Player {
   }
 
   public void collision(Infected infected) {
-    float playerMinX = infected.minX - this.width;
-    float playerMinY = infected.minY - this.height;
-    float playerMaxX = infected.maxX + this.width;
-    float playerMaxY = infected.maxY + this.height;
+    float playerMinX = infected.getMinX() - this.width;
+    float playerMinY = infected.getMinY() - this.height;
+    float playerMaxX = infected.getMaxX() + this.width;
+    float playerMaxY = infected.getMaxY() + this.height;
 
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
       this.health -= 1;
     }
 
-//    if (this.x < playerMinX) {
-//      this.x = playerMinX;
-//    } else if (this.x > playerMaxX) {
-//      this.x = playerMaxX;
-//    }
-//
-//    if (this.y < playerMinY) {
-//      this.y = playerMinY;
-//    } else if (this.y > playerMaxY) {
-//      this.y = playerMaxY;
-//    }
+    // if (this.x < playerMinX) {
+    // this.x = playerMinX;
+    // } else if (this.x > playerMaxX) {
+    // this.x = playerMaxX;
+    // }
+    //
+    // if (this.y < playerMinY) {
+    // this.y = playerMinY;
+    // } else if (this.y > playerMaxY) {
+    // this.y = playerMaxY;
+    // }
   }
 
 }
