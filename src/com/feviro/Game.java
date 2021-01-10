@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import com.feviro.gfx.Textures;
+import com.feviro.states.GameOverState;
 import com.feviro.states.GameState;
 import com.feviro.states.MenuState;
 import com.feviro.states.State;
@@ -22,6 +23,7 @@ public class Game extends JPanel implements Runnable {
 	// States
 	private State gameState;
 	private State menuState;
+	private State gameOverState;
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -42,6 +44,7 @@ public class Game extends JPanel implements Runnable {
 
 		gameState = new GameState(this);
 		menuState = new MenuState(this);
+		gameOverState = new GameOverState(this);
 
 		State.setCurrentState(menuState);
 
@@ -61,7 +64,6 @@ public class Game extends JPanel implements Runnable {
 			return;
 
 		running = false;
-
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
@@ -135,6 +137,10 @@ public class Game extends JPanel implements Runnable {
 
 	public State getMenuState() {
 		return menuState;
+	}
+	
+	public State getGameOverState() {
+		return gameOverState;
 	}
 
 }

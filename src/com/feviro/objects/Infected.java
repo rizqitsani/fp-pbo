@@ -1,7 +1,9 @@
 package com.feviro.objects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
+import com.feviro.Game;
 import com.feviro.gfx.Textures;
 
 public class Infected extends GameObject {
@@ -9,10 +11,10 @@ public class Infected extends GameObject {
   private float minX, minY, maxX, maxY;
   private int width, height, radius;
 
-  public Infected(float x, float y) {
-    super(x, y);
-    this.width = 20;
-    this.height = 20;
+  public Infected(float x, float y, Game game) {
+    super(x, y, game);
+    this.width = 48;
+    this.height = 48;
     this.radius = 30;
     this.minX = x - this.radius;
     this.minY = y - this.radius;
@@ -21,7 +23,9 @@ public class Infected extends GameObject {
   }
 
   public void render(Graphics g) {
-    g.drawImage(Textures.infected, (int) this.x, (int) this.y, null);
+    g.drawImage(Textures.infected, (int) this.x, (int) this.y, this.width, this.height, null);
+    g.setColor(Color.RED);
+	g.drawRect((int) this.x, (int) this.y, width, height);
   }
 
   public float getMinX() {

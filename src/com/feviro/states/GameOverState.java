@@ -7,9 +7,9 @@ import java.awt.event.KeyEvent;
 
 import com.feviro.Game;
 
-public class MenuState extends State {
-
-	public MenuState(Game game) {
+public class GameOverState extends State {
+	
+	public GameOverState(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
@@ -24,14 +24,15 @@ public class MenuState extends State {
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Roboto", Font.BOLD, 32));
-		g.drawString("Press enter to continue", 200, 200);
+		g.drawString("Game Over, press Enter to exit!", 200, 200);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_ENTER) {
-			State.setCurrentState(new GameState(game));
+//			System.exit(1);
+			State.setCurrentState(game.getMenuState());
 		}
 	}
 

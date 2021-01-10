@@ -5,9 +5,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.feviro.Game;
 import com.feviro.GameArea;
 import com.feviro.gfx.Animation;
 import com.feviro.gfx.Textures;
+import com.feviro.states.State;
 
 public class Player extends GameObject {
   private float width, height;
@@ -22,12 +24,15 @@ public class Player extends GameObject {
   private Animation animDown;
   private Animation animLeft;
   private Animation animRight;
+  
+  // Direction
+  private String currentDirection;
 
-  public Player(float x, float y, float baseSpeed) {
-    super(x, y);
+  public Player(float x, float y, float baseSpeed, Game game) {
+    super(x, y, game);
     this.baseSpeed = baseSpeed;
-    this.width = 10;
-    this.height = 10;
+    this.width = 48;
+    this.height = 48;
     this.health = 100;
 
     // Animations
@@ -37,6 +42,7 @@ public class Player extends GameObject {
     animRight = new Animation(250, Textures.playerRight);
 
     currentAnim = animUp;
+    currentDirection = "UP";
   }
 
   public void tick(GameArea area, List<Infected> infectedList) {
@@ -57,7 +63,8 @@ public class Player extends GameObject {
   }
 
   public void render(Graphics g) {
-    g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, null);
+    g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, (int) this.width, (int) this.height, null);
+    g.drawString(String.valueOf(this.health), 20, 580);
   }
 
   private BufferedImage getCurrentAnimationFrame() {
@@ -76,7 +83,7 @@ public class Player extends GameObject {
 
   public void checkIsLive() {
     if (this.health <= 0) {
-      // TODO ubah kondisi
+      State.setCurrentState(game.getGameOverState());
     }
   }
 
@@ -90,18 +97,22 @@ public class Player extends GameObject {
 
   public void moveLeft() {
     this.speedX = -1;
+    this.currentDirection = "LEFT";
   }
 
   public void moveUp() {
     this.speedY = -1;
+    this.currentDirection = "UP";
   }
 
   public void moveRight() {
     this.speedX = 1;
+    this.currentDirection = "RIGHT";
   }
 
   public void moveDown() {
     this.speedY = 1;
+    this.currentDirection = "DOWN";
   }
 
   public void moveXStop() {
@@ -113,7 +124,36 @@ public class Player extends GameObject {
   }
 
   public void shoot(List<Bullet> list) {
-    list.add(new Bullet(this.x, this.y, 5, 5, -90, Color.RED));
+	int bulletAngle = 0;
+	float startX = 0;
+	float startY = 0;
+	switch (currentDirection) {
+	case "UP":
+		bulletAngle = -90; 
+		startX = this.x + (this.width / 2);
+		startY = this.y;
+		break;
+	case "DOWN":
+		bulletAngle = 90;
+		startX = this.x + (this.width / 2);
+		startY = this.y + this.height;
+		break;
+	case "LEFT":
+		bulletAngle = 180; 
+		startX = this.x;
+		startY = this.y + (this.height / 2);
+		break;
+	case "RIGHT":
+		bulletAngle = 0;
+		startX = this.x + this.width;
+		startY = this.y + (this.height / 2);
+		break;
+	default:
+		break;
+	}
+	
+	list.add(new Bullet(startX, startY, 5, 5, bulletAngle, Color.RED, game));
+    
   }
 
   public void collision(GameArea area) {

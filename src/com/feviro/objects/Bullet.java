@@ -3,6 +3,7 @@ package com.feviro.objects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.feviro.Game;
 import com.feviro.GameArea;
 
 public class Bullet extends GameObject {
@@ -10,8 +11,8 @@ public class Bullet extends GameObject {
 	private float radius;
 	private Color color;
 
-	public Bullet(float x, float y, float radius, float speed, float angleInDegree, Color color) {
-		super(x, y);
+	public Bullet(float x, float y, float radius, float speed, float angleInDegree, Color color, Game game) {
+		super(x, y, game);
 		this.speedX = (float) (speed * Math.cos(Math.toRadians(angleInDegree)));
 		this.speedY = (float) (speed * Math.sin(Math.toRadians(angleInDegree)));
 		this.radius = radius;

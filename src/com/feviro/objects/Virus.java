@@ -3,12 +3,12 @@ package com.feviro.objects;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.feviro.Game;
 import com.feviro.gfx.Animation;
 import com.feviro.gfx.Textures;
 
-public class Virus {
+public class Virus extends GameObject {
 
-	private float x, y;
 	private int width, height;
 	private float speedX, speedY;
 	private float baseSpeed;
@@ -17,12 +17,13 @@ public class Virus {
 	// Animations
 	private Animation virusHit;
 
-	public Virus(float x, float y, float baseSpeed) {
+	public Virus(float x, float y, float baseSpeed, Game game) {
+		super(x, y, game);
 		this.setX(x);
 		this.y = y;
 		this.baseSpeed = baseSpeed;
-		this.setWidth(20);
-		this.setHeight(20);
+		this.width = 48;
+		this.height = 48;
 		this.health = 30;
 
 		// Animations
@@ -45,7 +46,9 @@ public class Virus {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, null);
+		g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, this.width, this.height, null);
+//		g.setColor(Color.GREEN);
+//		g.drawRect((int) this.x, (int) this.y, width, height);
 	}
 
 	private BufferedImage getCurrentAnimationFrame() {
