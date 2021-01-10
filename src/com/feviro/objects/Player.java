@@ -17,6 +17,7 @@ public class Player extends GameObject {
   private int health;
 
   // Animations
+  private Animation currentAnim;
   private Animation animUp;
   private Animation animDown;
   private Animation animLeft;
@@ -34,6 +35,8 @@ public class Player extends GameObject {
     animDown = new Animation(250, Textures.playerDown);
     animLeft = new Animation(250, Textures.playerLeft);
     animRight = new Animation(250, Textures.playerRight);
+
+    currentAnim = animUp;
   }
 
   public void tick(GameArea area, List<Infected> infectedList) {
@@ -59,16 +62,16 @@ public class Player extends GameObject {
 
   private BufferedImage getCurrentAnimationFrame() {
     if (speedX > 0) {
-      return animRight.getCurrentFrame();
+      currentAnim = animRight;
     } else if (speedX < 0) {
-      return animLeft.getCurrentFrame();
+      currentAnim = animLeft;
     } else if (speedY > 0) {
-      return animDown.getCurrentFrame();
+      currentAnim = animDown;
     } else if (speedY < 0) {
-      return animUp.getCurrentFrame();
+      currentAnim = animUp;
     }
 
-    return animUp.getCurrentFrame();
+    return currentAnim.getCurrentFrame();
   }
 
   public void checkIsLive() {
@@ -141,6 +144,18 @@ public class Player extends GameObject {
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
       this.health -= 1;
     }
+
+    // if (this.x < playerMinX) {
+    // this.x = playerMinX;
+    // } else if (this.x > playerMaxX) {
+    // this.x = playerMaxX;
+    // }
+    //
+    // if (this.y < playerMinY) {
+    // this.y = playerMinY;
+    // } else if (this.y > playerMaxY) {
+    // this.y = playerMaxY;
+    // }
   }
 
 }

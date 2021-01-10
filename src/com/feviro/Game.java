@@ -18,11 +18,11 @@ public class Game extends JPanel implements Runnable {
 
 	private boolean running = false;
 	private Thread thread;
-	
-	//States
+
+	// States
 	private State gameState;
 	private State menuState;
-	
+
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -39,13 +39,12 @@ public class Game extends JPanel implements Runnable {
 
 	public void init() {
 		Textures.init();
-		
+
 		gameState = new GameState(this);
 		menuState = new MenuState(this);
-		
+
 		State.setCurrentState(menuState);
 
-		
 	}
 
 	public synchronized void start() {
@@ -108,16 +107,16 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void tick() {
-		if(State.getCurrentState() != null) {
+		if (State.getCurrentState() != null) {
 			State.getCurrentState().tick();
 		}
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		if(State.getCurrentState() != null) {
+
+		if (State.getCurrentState() != null) {
 			State.getCurrentState().render(g);
 		}
 	}
@@ -137,7 +136,5 @@ public class Game extends JPanel implements Runnable {
 	public State getMenuState() {
 		return menuState;
 	}
-
-	
 
 }
