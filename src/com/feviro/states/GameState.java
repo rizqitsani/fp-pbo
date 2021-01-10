@@ -15,7 +15,7 @@ import com.feviro.Player;
 import com.feviro.Virus;
 
 public class GameState extends State {
-	
+
 	private GameArea area;
 	private Player player;
 	private List<Infected> infectedList = new ArrayList<Infected>();
@@ -24,7 +24,7 @@ public class GameState extends State {
 
 	public GameState(Game game) {
 		super(game);
-		
+
 		this.player = new Player(game.getWidth() / 2, game.getHeight() - 40, 5);
 
 		this.area = new GameArea(0, 0, game.getWidth(), game.getHeight(), Color.BLACK, Color.WHITE);
@@ -61,8 +61,8 @@ public class GameState extends State {
 	public void render(Graphics g) {
 		player.render(g);
 
-		for (Infected infected : infectedList) {
-			infected.render(g);
+		for (int i = 0; i < infectedList.size(); i++) {
+			infectedList.get(i).render(g);
 		}
 
 		for (int i = 0; i < virusList.size(); i++) {

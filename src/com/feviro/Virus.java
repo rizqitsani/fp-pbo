@@ -13,7 +13,7 @@ public class Virus {
 	private float speedX, speedY;
 	private float baseSpeed;
 	private int health;
-	
+
 	// Animations
 	private Animation virusHit;
 
@@ -24,15 +24,15 @@ public class Virus {
 		this.setWidth(20);
 		this.setHeight(20);
 		this.health = 30;
-		
+
 		// Animations
 		virusHit = new Animation(250, Textures.virusHit);
 	}
-	
+
 	public void tick(Player player) {
-		if(checkIsLive())
+		if (checkIsLive())
 			virusHit.tick();
-		
+
 		this.setX(this.getX() + (speedX * baseSpeed));
 		this.setY(this.getY() + (speedY * baseSpeed));
 
@@ -47,9 +47,9 @@ public class Virus {
 	public void render(Graphics g) {
 		g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, null);
 	}
-	
+
 	private BufferedImage getCurrentAnimationFrame() {
-		if(checkIsLive())
+		if (checkIsLive())
 			return virusHit.getCurrentFrame();
 		else
 			return Textures.virusDead;

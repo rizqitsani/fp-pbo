@@ -17,7 +17,7 @@ public class MenuState extends State {
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class MenuState extends State {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_ENTER) {
+		if (key == KeyEvent.VK_ENTER) {
 			State.setCurrentState(game.getGameState());
 		}
 	}
@@ -38,7 +38,7 @@ public class MenuState extends State {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
