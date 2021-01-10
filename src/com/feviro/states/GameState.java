@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.feviro.Bullet;
 import com.feviro.Game;
 import com.feviro.GameArea;
-import com.feviro.Infected;
-import com.feviro.Player;
-import com.feviro.Virus;
+import com.feviro.objects.Bullet;
+import com.feviro.objects.Infected;
+import com.feviro.objects.Player;
+import com.feviro.objects.Virus;
 
 public class GameState extends State {
 	
@@ -29,14 +29,14 @@ public class GameState extends State {
 
 		this.area = new GameArea(0, 0, game.getWidth(), game.getHeight(), Color.BLACK, Color.WHITE);
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 5; i++) {
 			Random random = new Random();
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;
 			infectedList.add(new Infected(x, y));
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 7; i++) {
 			Random random = new Random();
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;

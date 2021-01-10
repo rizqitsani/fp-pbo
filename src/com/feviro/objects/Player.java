@@ -1,36 +1,35 @@
-package com.feviro;
+package com.feviro.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.feviro.GameArea;
 import com.feviro.gfx.Animation;
 import com.feviro.gfx.Textures;
 
-public class Player {
-  private float x, y;
+public class Player extends GameObject {
   private float width, height;
   private float baseSpeed;
   private float speedX;
   private float speedY;
   private int health;
-  
-  //Animations
+
+  // Animations
   private Animation animUp;
   private Animation animDown;
   private Animation animLeft;
   private Animation animRight;
 
   public Player(float x, float y, float baseSpeed) {
-    this.x = x;
-    this.y = y;
+    super(x, y);
     this.baseSpeed = baseSpeed;
     this.width = 10;
     this.height = 10;
     this.health = 100;
-    
-    //Animations
+
+    // Animations
     animUp = new Animation(250, Textures.playerUp);
     animDown = new Animation(250, Textures.playerDown);
     animLeft = new Animation(250, Textures.playerLeft);
@@ -38,11 +37,11 @@ public class Player {
   }
 
   public void tick(GameArea area, List<Infected> infectedList) {
-	animUp.tick();
-	animDown.tick();
-	animLeft.tick();
-	animRight.tick();
-	  
+    animUp.tick();
+    animDown.tick();
+    animLeft.tick();
+    animRight.tick();
+
     this.x += (speedX * baseSpeed);
     this.y += (speedY * baseSpeed);
 
@@ -53,23 +52,23 @@ public class Player {
 
     checkIsLive();
   }
-  
+
   public void render(Graphics g) {
     g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, null);
   }
-  
+
   private BufferedImage getCurrentAnimationFrame() {
-	  if(speedX > 0) {
-		  return animRight.getCurrentFrame();
-	  } else if(speedX < 0) {
-		  return animLeft.getCurrentFrame();
-	  } else if(speedY > 0) {
-		  return animDown.getCurrentFrame();
-	  } else if(speedX < 0) {
-		  return animUp.getCurrentFrame();
-	  }
-	  
-	  return animUp.getCurrentFrame();
+    if (speedX > 0) {
+      return animRight.getCurrentFrame();
+    } else if (speedX < 0) {
+      return animLeft.getCurrentFrame();
+    } else if (speedY > 0) {
+      return animDown.getCurrentFrame();
+    } else if (speedY < 0) {
+      return animUp.getCurrentFrame();
+    }
+
+    return animUp.getCurrentFrame();
   }
 
   public void checkIsLive() {
@@ -115,10 +114,10 @@ public class Player {
   }
 
   public void collision(GameArea area) {
-    float playerMinX = area.minX;
-    float playerMinY = area.minY;
-    float playerMaxX = area.maxX;
-    float playerMaxY = area.maxY;
+    float playerMinX = area.getMinX();
+    float playerMinY = area.getMinY();
+    float playerMaxX = area.getMaxX();
+    float playerMaxY = area.getMaxY();
 
     if (this.x < playerMinX) {
       this.x = playerMinX;
@@ -134,10 +133,10 @@ public class Player {
   }
 
   public void collision(Infected infected) {
-    float playerMinX = infected.minX - this.width;
-    float playerMinY = infected.minY - this.height;
-    float playerMaxX = infected.maxX + this.width;
-    float playerMaxY = infected.maxY + this.height;
+    float playerMinX = infected.getMinX() - this.width;
+    float playerMinY = infected.getMinY() - this.height;
+    float playerMaxX = infected.getMaxX() + this.width;
+    float playerMaxY = infected.getMaxY() + this.height;
 
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
       this.health -= 1;
