@@ -16,8 +16,9 @@ public class Player extends GameObject {
   private float baseSpeed, boostSpeed;
   private float speedX;
   private float speedY;
-  private float health;
+  private float health, mana;
   private boolean isBoosted;
+  private static final float MAX_MANA = 100;
 
   // Animations
   private Animation currentAnim;
@@ -36,6 +37,7 @@ public class Player extends GameObject {
     this.width = 48;
     this.height = 48;
     this.health = 100;
+    this.mana = 100;
 
     // Animations
     animUp = new Animation(250, Textures.playerUp);
@@ -53,11 +55,16 @@ public class Player extends GameObject {
     animLeft.tick();
     animRight.tick();
 
-    if (isBoosted) {
-    	speedX *= this.boostSpeed;
-    	speedY *= this.boostSpeed;
+    if (this.mana <= MAX_MANA) {
+    	this.mana += 0.01f;    	
     }
-    System.out.println(speedX);
+    
+    if (this.mana > 0) {
+    	if (isBoosted) {
+    		speedX *= this.boostSpeed;
+    		speedY *= this.boostSpeed;
+    	}    	
+    }
     
     this.x += (speedX * baseSpeed);
     this.y += (speedY * baseSpeed);
@@ -72,7 +79,6 @@ public class Player extends GameObject {
 
   public void render(Graphics g) {
     g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, (int) this.width, (int) this.height, null);
-    g.drawString(String.valueOf((int) this.health), 20, 580);
     
     // Healthbar
     g.setColor(Color.GRAY);
@@ -86,7 +92,7 @@ public class Player extends GameObject {
     g.setColor(Color.GRAY);
     g.fillRect(530, 535, 250, 40);
     g.setColor(Color.BLUE);
-    g.fillRect(530, 535, (int) (health * 2.5), 40);
+    g.fillRect(530, 535, (int) (mana * 2.5), 40);
     g.setColor(Color.WHITE);
     g.drawRect(530, 535, 250, 40);
   }
@@ -156,6 +162,7 @@ public class Player extends GameObject {
   }
   
   public void boost() {
+	  this.mana -= 1f; 
 	  this.isBoosted = true;
   }
   
@@ -236,6 +243,17 @@ public class Player extends GameObject {
     // } else if (this.y > playerMaxY) {
     // this.y = playerMaxY;
     // }
+  }
+  
+  public void collision(Virus virus) {
+	float playerMinX = virus.getX();
+	float playerMinY = virus.getY();
+	float playerMaxX = virus.getX() + virus.getWidth();
+	float playerMaxY = virus.getY() + virus.getWidth();
+
+	if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
+	  this.health -= 0.25f;
+	}
   }
 
 }

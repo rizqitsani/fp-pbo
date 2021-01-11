@@ -87,6 +87,9 @@ public class GameState extends State {
 					}					
 				}
 			}
+			if(virusList.get(i).checkIsLive()) {
+				player.collision(virusList.get(i));				
+			}
 			virusList.get(i).render(g);
 		}
 
