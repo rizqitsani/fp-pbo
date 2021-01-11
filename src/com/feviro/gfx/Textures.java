@@ -8,7 +8,7 @@ public class Textures {
 
 	private static final int width = 48, height = 48, frameWidth = 800, frameHeight = 600;
 
-	public static BufferedImage infected, virusDead, menuBackground, cure;
+	public static BufferedImage infected, virusDead, menuBackground, cure, background;
 	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit, newGameButton, helpButton, exitButton;
 
 	private static List<SpriteSheet> spriteSheet = new ArrayList<SpriteSheet>();
@@ -20,6 +20,7 @@ public class Textures {
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/Main Menu.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/menu.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/cure.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/background.png")));
 
 		playerUp = new BufferedImage[4];
 		playerDown = new BufferedImage[4];
@@ -74,6 +75,7 @@ public class Textures {
 		virusDead = spriteSheet.get(1).grabImage(width * 19, height, width, height);
 		menuBackground = spriteSheet.get(3).grabImage(0, 0, frameWidth, frameHeight);
 		cure = spriteSheet.get(5).grabImage(0, 0, 24, 24);
+		background = spriteSheet.get(6).grabImage(0, 0, 800, 600);
 	}
 
 }

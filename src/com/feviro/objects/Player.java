@@ -16,7 +16,7 @@ public class Player extends GameObject {
   private float baseSpeed, boostSpeed;
   private float speedX;
   private float speedY;
-  private int health;
+  private float health;
   private boolean isBoosted;
 
   // Animations
@@ -72,7 +72,23 @@ public class Player extends GameObject {
 
   public void render(Graphics g) {
     g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, (int) this.width, (int) this.height, null);
-    g.drawString(String.valueOf(this.health), 20, 580);
+    g.drawString(String.valueOf((int) this.health), 20, 580);
+    
+    // Healthbar
+    g.setColor(Color.GRAY);
+    g.fillRect(20, 535, 250, 40);
+    g.setColor(Color.GREEN);
+    g.fillRect(20, 535, (int) (health * 2.5), 40);
+    g.setColor(Color.WHITE);
+    g.drawRect(20, 535, 250, 40);
+    
+    // Manabar
+    g.setColor(Color.GRAY);
+    g.fillRect(530, 535, 250, 40);
+    g.setColor(Color.BLUE);
+    g.fillRect(530, 535, (int) (health * 2.5), 40);
+    g.setColor(Color.WHITE);
+    g.drawRect(530, 535, 250, 40);
   }
 
   private BufferedImage getCurrentAnimationFrame() {
@@ -206,7 +222,7 @@ public class Player extends GameObject {
     float playerMaxY = infected.getMaxY() + this.height;
 
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
-      this.health -= 1;
+      this.health -= 0.2f;
     }
 
     // if (this.x < playerMinX) {

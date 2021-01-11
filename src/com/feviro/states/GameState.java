@@ -9,6 +9,7 @@ import java.util.Random;
 
 import com.feviro.Game;
 import com.feviro.GameArea;
+import com.feviro.gfx.Textures;
 import com.feviro.objects.Bullet;
 import com.feviro.objects.Cure;
 import com.feviro.objects.Infected;
@@ -64,12 +65,16 @@ public class GameState extends State {
 		for (Virus virus : virusList) {
 			virus.tick(player);
 		}
+		
+		if(cureList.isEmpty()) {
+			State.setCurrentState(game.getWinState());
+		}
 	}
 
 	@Override
 	public void render(Graphics g) {
-		player.render(g);
-
+		g.drawImage(Textures.background, 0, 0, game.getWidth(), game.getHeight(), null);
+		
 		for (int i = 0; i < infectedList.size(); i++) {
 			infectedList.get(i).render(g);
 		}
@@ -99,6 +104,8 @@ public class GameState extends State {
 			}
 			cureList.get(i).render(g);
 		}
+		
+		player.render(g);
 		
 	}
 
