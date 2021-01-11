@@ -27,7 +27,7 @@ public class HelpState extends State {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_ENTER) {
+		if (key == KeyEvent.VK_SPACE) {
 			if (index == 1)
 				State.setCurrentState(game.getMenuState());
 			else
