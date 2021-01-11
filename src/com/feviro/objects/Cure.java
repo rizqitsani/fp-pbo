@@ -1,6 +1,5 @@
 package com.feviro.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import com.feviro.Game;
@@ -21,8 +20,8 @@ public class Cure extends GameObject {
 
 	public void render(Graphics g) {
 		g.drawImage(Textures.cure, (int) this.x, (int) this.y, this.width, this.height, null);
-		g.setColor(Color.GREEN);
-		g.drawRect((int) this.x, (int) this.y, width, height);
+		// g.setColor(Color.GREEN);
+		// g.drawRect((int) this.x, (int) this.y, width, height);
 	}
 
 	public boolean checkIsObtained() {
@@ -38,7 +37,6 @@ public class Cure extends GameObject {
 
 		if (playerMinX < (this.x + this.height) && playerMaxX > (this.x) && playerMinY < (this.y + this.height)
 				&& playerMaxY > (this.y)) {
-			System.out.println("Yay");
 			this.isObtained = true;
 		}
 	}

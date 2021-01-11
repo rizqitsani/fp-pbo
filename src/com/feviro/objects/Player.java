@@ -56,11 +56,12 @@ public class Player extends GameObject {
     animRight.tick();
 
     if (this.mana <= MAX_MANA) {
-      this.mana += 0.01f;
+      this.mana += 0.05f;
     }
 
     if (this.mana > 0) {
       if (isBoosted) {
+        this.mana -= 0.3f;
         speedX *= this.boostSpeed;
         speedY *= this.boostSpeed;
       }
@@ -146,7 +147,6 @@ public class Player extends GameObject {
   }
 
   public void boost() {
-    this.mana -= 1f;
     this.isBoosted = true;
   }
 

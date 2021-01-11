@@ -1,6 +1,5 @@
 package com.feviro.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import com.feviro.Game;
@@ -24,8 +23,8 @@ public class Infected extends GameObject {
 
   public void render(Graphics g) {
     g.drawImage(Textures.infected, (int) this.x, (int) this.y, this.width, this.height, null);
-    g.setColor(Color.RED);
-    g.drawRect((int) this.x, (int) this.y, width, height);
+    // g.setColor(Color.RED);
+    // g.drawRect((int) this.x, (int) this.y, width, height);
   }
 
   public float getMinX() {

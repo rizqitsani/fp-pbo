@@ -117,7 +117,7 @@ public class Game extends JPanel implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println(updates + " Ticks, FPS: " + frames);
+				// System.out.println(updates + " Ticks, FPS: " + frames);
 				updates = 0;
 				frames = 0;
 			}
