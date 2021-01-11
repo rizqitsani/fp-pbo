@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import com.feviro.Game;
+import com.feviro.gfx.Textures;
 
 public class MenuState extends State {
 
@@ -22,7 +23,8 @@ public class MenuState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLACK);
+		g.drawImage(Textures.menuBackground, 0, 0, null);
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("Roboto", Font.BOLD, 32));
 		g.drawString("Press enter to continue", 200, 200);
 	}
