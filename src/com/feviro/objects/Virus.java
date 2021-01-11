@@ -124,7 +124,7 @@ public class Virus extends GameObject {
 		if (distanceX <= maxDistX && distanceY <= maxDistY) {
 			// System.out.println(distanceX + " " + distanceY + " " + maxDistX + " " +
 			// maxDistY);
-			this.health -= 10;
+			this.health -= bullet.getDamage();
 			if (bullet.x < virusMinX || bullet.x > virusMaxX || bullet.y < virusMinY || bullet.y > virusMaxY) {
 				return true;
 			}

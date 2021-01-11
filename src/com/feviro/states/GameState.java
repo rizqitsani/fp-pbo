@@ -27,7 +27,7 @@ public class GameState extends State {
 	public GameState(Game game) {
 		super(game);
 
-		this.player = new Player(game.getWidth() / 2, game.getHeight() - 40, 5, this.game);
+		this.player = new Player(game.getWidth() / 2, game.getHeight() - 40, 1.5f, this.game);
 
 		this.area = new GameArea(0, 0, game.getWidth(), game.getHeight(), Color.BLACK, Color.WHITE);
 
@@ -42,7 +42,7 @@ public class GameState extends State {
 			Random random = new Random();
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;
-			virusList.add(new Virus(x, y, 1, this.game));
+			virusList.add(new Virus(x, y, 0.3f, this.game));
 		}
 		
 		for (int i = 0; i < 5; i++) {

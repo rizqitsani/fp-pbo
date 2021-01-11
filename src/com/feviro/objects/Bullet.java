@@ -8,7 +8,7 @@ import com.feviro.GameArea;
 
 public class Bullet extends GameObject {
 	private float speedX, speedY;
-	private float radius;
+	private float radius, damage;
 	private Color color;
 
 	public Bullet(float x, float y, float radius, float speed, float angleInDegree, Color color, Game game) {
@@ -17,6 +17,7 @@ public class Bullet extends GameObject {
 		this.speedY = (float) (speed * Math.sin(Math.toRadians(angleInDegree)));
 		this.radius = radius;
 		this.color = color;
+		this.damage = 5;
 	}
 
 	public void tick(GameArea area) {
@@ -56,6 +57,10 @@ public class Bullet extends GameObject {
 
 	public float getRadius() {
 		return radius;
+	}
+	
+	public float getDamage() {
+		return damage;
 	}
 
 	// public void collide(Ball anotherBall) {
