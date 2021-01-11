@@ -8,19 +8,23 @@ public class Textures {
 
 	private static final int width = 48, height = 48, frameWidth = 800, frameHeight = 600;
 
-	public static BufferedImage infected, virusDead, menuBackground, cure, background;
-	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit, newGameButton, helpButton, exitButton;
+	public static BufferedImage infected, virusDead, menuBackground, cure, gameBackground, winBackground, gameOverBackground;
+	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit, newGameButton, helpButton, exitButton, helpBackground;
 
 	private static List<SpriteSheet> spriteSheet = new ArrayList<SpriteSheet>();
 
 	public static void init() {
-		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/dante_0.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/player.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/virus.png")));
-		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/george.png")));
-		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/Main Menu.png")));
-		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/menu.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/infected.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/main-menu.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/menu-button.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/cure.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/background.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/help1.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/help2.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/game-over.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/win.png")));
 
 		playerUp = new BufferedImage[4];
 		playerDown = new BufferedImage[4];
@@ -30,6 +34,7 @@ public class Textures {
 		newGameButton = new BufferedImage[2];
 		helpButton = new BufferedImage[2];
 		exitButton = new BufferedImage[2];
+		helpBackground = new BufferedImage[2];
 
 		playerUp[0] = spriteSheet.get(0).grabImage(width * 2, 0, width, height);
 		playerUp[1] = spriteSheet.get(0).grabImage(width * 2, height, width, height);
@@ -70,12 +75,17 @@ public class Textures {
 		
 		exitButton[0] = spriteSheet.get(4).grabImage(0, 144, 200, 71);
 		exitButton[1] = spriteSheet.get(4).grabImage(200, 144, 200, 71);
+		
+		helpBackground[0] = spriteSheet.get(7).grabImage(0, 0, frameWidth, frameHeight);
+		helpBackground[1] = spriteSheet.get(8).grabImage(0, 0, frameWidth, frameHeight);
 
 		infected = spriteSheet.get(2).grabImage(0, 0, width, height);
 		virusDead = spriteSheet.get(1).grabImage(width * 19, height, width, height);
 		menuBackground = spriteSheet.get(3).grabImage(0, 0, frameWidth, frameHeight);
 		cure = spriteSheet.get(5).grabImage(0, 0, 24, 24);
-		background = spriteSheet.get(6).grabImage(0, 0, 800, 600);
+		gameBackground = spriteSheet.get(6).grabImage(0, 0, 800, 600);
+		gameOverBackground = spriteSheet.get(9).grabImage(0, 0, 800, 600);
+		winBackground = spriteSheet.get(10).grabImage(0, 0, 800, 600);
 	}
 
 }

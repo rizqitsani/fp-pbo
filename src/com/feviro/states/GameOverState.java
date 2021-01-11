@@ -1,14 +1,13 @@
 package com.feviro.states;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import com.feviro.Game;
+import com.feviro.gfx.Textures;
 
 public class GameOverState extends State {
-	
+
 	public GameOverState(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
@@ -22,16 +21,13 @@ public class GameOverState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.setFont(new Font("Roboto", Font.BOLD, 32));
-		g.drawString("Game Over, press Enter to exit!", 200, 200);
+		g.drawImage(Textures.gameOverBackground, 0, 0, null);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_ENTER) {
-//			System.exit(1);
+		if (key == KeyEvent.VK_SPACE) {
 			State.setCurrentState(game.getMenuState());
 		}
 	}

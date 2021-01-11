@@ -10,6 +10,7 @@ import com.feviro.input.KeyManager;
 import com.feviro.input.MouseManager;
 import com.feviro.states.GameOverState;
 import com.feviro.states.GameState;
+import com.feviro.states.HelpState;
 import com.feviro.states.MenuState;
 import com.feviro.states.State;
 import com.feviro.states.WinState;
@@ -28,6 +29,7 @@ public class Game extends JPanel implements Runnable {
 	private State menuState;
 	private State gameOverState;
 	private State winState;
+	private State helpState;
 	
 	// Input
 	private KeyManager keyManager;
@@ -61,6 +63,7 @@ public class Game extends JPanel implements Runnable {
 		menuState = new MenuState(this);
 		gameOverState = new GameOverState(this);
 		winState = new WinState(this);
+		helpState = new HelpState(this);
 
 		State.setCurrentState(menuState);
 
@@ -161,6 +164,10 @@ public class Game extends JPanel implements Runnable {
 	
 	public State getWinState() {
 		return winState;
+	}
+	
+	public State getHelpState() {
+		return helpState;
 	}
 
 	public KeyManager getKeyManager() {

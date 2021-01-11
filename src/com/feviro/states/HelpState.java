@@ -6,35 +6,38 @@ import java.awt.event.KeyEvent;
 import com.feviro.Game;
 import com.feviro.gfx.Textures;
 
-public class WinState extends State {
+public class HelpState extends State {
+	
+	private int index;
 
-	public WinState(Game game) {
+	public HelpState(Game game) {
 		super(game);
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Textures.winBackground, 0, 0, null);
+		g.drawImage(Textures.helpBackground[index], 0, 0, null);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_SPACE) {
-			State.setCurrentState(game.getMenuState());
+		if(key == KeyEvent.VK_ENTER) {
+			if(index == 1)
+				State.setCurrentState(game.getMenuState());
+			else
+				index++;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

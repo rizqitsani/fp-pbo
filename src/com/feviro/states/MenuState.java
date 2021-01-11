@@ -32,6 +32,7 @@ public class MenuState extends State {
 		uiManager.addObject(new UIImageButton((game.getWidth() / 2 - 100), 335, 200, 72, Textures.helpButton, new ClickListener() {
 			@Override
 			public void onClick() {
+				State.setCurrentState(new HelpState(game));
 			}
 		}));
 		
@@ -56,10 +57,7 @@ public class MenuState extends State {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_ENTER) {
-			State.setCurrentState(new GameState(game));
-		}
+		
 	}
 
 	@Override

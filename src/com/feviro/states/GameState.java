@@ -73,7 +73,7 @@ public class GameState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Textures.background, 0, 0, game.getWidth(), game.getHeight(), null);
+		g.drawImage(Textures.gameBackground, 0, 0, game.getWidth(), game.getHeight(), null);
 		
 		for (int i = 0; i < infectedList.size(); i++) {
 			infectedList.get(i).render(g);
