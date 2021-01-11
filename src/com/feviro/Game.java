@@ -99,8 +99,8 @@ public class Game extends JPanel implements Runnable {
 		double ns = 1000000000 / FPS;
 		double delta = 0;
 
-		int updates = 0;
-		int frames = 0;
+		// int updates = 0;
+		// int frames = 0;
 		long timer = System.currentTimeMillis();
 
 		while (running) {
@@ -109,17 +109,17 @@ public class Game extends JPanel implements Runnable {
 			lastTime = now;
 			if (delta >= 1) {
 				tick();
-				updates++;
+				// updates++;
 				delta--;
 			}
 			repaint();
-			frames++;
+			// frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				// System.out.println(updates + " Ticks, FPS: " + frames);
-				updates = 0;
-				frames = 0;
+				// updates = 0;
+				// frames = 0;
 			}
 		}
 
