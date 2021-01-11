@@ -25,29 +25,29 @@ public class GameState extends State {
 	private List<Bullet> bulletList = new ArrayList<Bullet>();
 	private List<Cure> cureList = new ArrayList<Cure>();
 
+	private Random random;
+
 	public GameState(Game game) {
 		super(game);
+		random = new Random();
 
-		this.player = new Player(game.getWidth() / 2, game.getHeight() - 40, 1.5f, 1.02f, this.game);
+		this.player = new Player(random.nextInt(game.getWidth()), random.nextInt(game.getHeight()), 1.5f, 1.02f, this.game);
 
 		this.area = new GameArea(0, 0, game.getWidth(), game.getHeight(), Color.BLACK, Color.WHITE);
 
 		for (int i = 0; i < 5; i++) {
-			Random random = new Random();
 			int x = random.nextInt(game.getWidth());
 			int y = random.nextInt(game.getHeight());
 			infectedList.add(new Infected(x, y, this.game));
 		}
 
 		for (int i = 0; i < 7; i++) {
-			Random random = new Random();
 			int x = random.nextInt(game.getWidth());
 			int y = random.nextInt(game.getHeight());
 			virusList.add(new Virus(x, y, 0.3f, this.game));
 		}
-		
+
 		for (int i = 0; i < 5; i++) {
-			Random random = new Random();
 			int x = random.nextInt(game.getWidth());
 			int y = random.nextInt(game.getHeight());
 			cureList.add(new Cure(x, y, this.game));
@@ -65,8 +65,8 @@ public class GameState extends State {
 		for (Virus virus : virusList) {
 			virus.tick(player);
 		}
-		
-		if(cureList.isEmpty()) {
+
+		if (cureList.isEmpty()) {
 			State.setCurrentState(game.getWinState());
 		}
 	}
@@ -74,21 +74,21 @@ public class GameState extends State {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Textures.gameBackground, 0, 0, game.getWidth(), game.getHeight(), null);
-		
+
 		for (int i = 0; i < infectedList.size(); i++) {
 			infectedList.get(i).render(g);
 		}
 
 		for (int i = 0; i < virusList.size(); i++) {
 			for (int j = 0; j < bulletList.size(); j++) {
-				if(virusList.get(i).checkIsLive()) {
+				if (virusList.get(i).checkIsLive()) {
 					if (virusList.get(i).collision(bulletList.get(j))) {
 						bulletList.remove(j);
-					}					
+					}
 				}
 			}
-			if(virusList.get(i).checkIsLive()) {
-				player.collision(virusList.get(i));				
+			if (virusList.get(i).checkIsLive()) {
+				player.collision(virusList.get(i));
 			}
 			virusList.get(i).render(g);
 		}
@@ -99,17 +99,17 @@ public class GameState extends State {
 			}
 			bulletList.get(i).render(g);
 		}
-		
+
 		for (int i = 0; i < cureList.size(); i++) {
 			cureList.get(i).collision(player);
-			if(cureList.get(i).checkIsObtained()) {
+			if (cureList.get(i).checkIsObtained()) {
 				cureList.remove(i);
 			}
 			cureList.get(i).render(g);
 		}
-		
+
 		player.render(g);
-		
+
 	}
 
 	@Override
