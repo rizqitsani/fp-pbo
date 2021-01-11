@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import com.feviro.gfx.Textures;
+import com.feviro.input.KeyManager;
+import com.feviro.input.MouseManager;
 import com.feviro.states.GameOverState;
 import com.feviro.states.GameState;
 import com.feviro.states.MenuState;
@@ -24,22 +26,33 @@ public class Game extends JPanel implements Runnable {
 	private State gameState;
 	private State menuState;
 	private State gameOverState;
+	
+	// Input
+	private KeyManager keyManager;
+	private MouseManager mouseManager;
 
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
+		
+		this.keyManager = new KeyManager();
+		this.mouseManager = new MouseManager();
 
 		this.setPreferredSize(new Dimension(width, height));
 		this.setMaximumSize(new Dimension(width, height));
 		this.setMinimumSize(new Dimension(width, height));
 
-		this.addKeyListener(new KeyInput());
+		
 		this.setFocusable(true);
 
 		start();
 	}
 
 	public void init() {
+		this.addKeyListener(keyManager);
+		this.addMouseListener(mouseManager);
+		this.addMouseMotionListener(mouseManager);
+		
 		Textures.init();
 
 		gameState = new GameState(this);
@@ -142,5 +155,15 @@ public class Game extends JPanel implements Runnable {
 	public State getGameOverState() {
 		return gameOverState;
 	}
+
+	public KeyManager getKeyManager() {
+		return keyManager;
+	}
+
+	public MouseManager getMouseManager() {
+		return mouseManager;
+	}
+	
+	
 
 }

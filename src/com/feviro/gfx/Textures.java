@@ -8,8 +8,8 @@ public class Textures {
 
 	private static final int width = 48, height = 48, frameWidth = 800, frameHeight = 600;
 
-	public static BufferedImage infected, virusDead, menuBackground;
-	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit;
+	public static BufferedImage infected, virusDead, menuBackground, cure;
+	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit, newGameButton, helpButton, exitButton;
 
 	private static List<SpriteSheet> spriteSheet = new ArrayList<SpriteSheet>();
 
@@ -18,12 +18,17 @@ public class Textures {
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/virus.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/george.png")));
 		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/Main Menu.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/menu.png")));
+		spriteSheet.add(new SpriteSheet(BufferedImageLoader.loadImage("/cure.png")));
 
 		playerUp = new BufferedImage[4];
 		playerDown = new BufferedImage[4];
 		playerLeft = new BufferedImage[4];
 		playerRight = new BufferedImage[4];
 		virusHit = new BufferedImage[10];
+		newGameButton = new BufferedImage[2];
+		helpButton = new BufferedImage[2];
+		exitButton = new BufferedImage[2];
 
 		playerUp[0] = spriteSheet.get(0).grabImage(width * 2, 0, width, height);
 		playerUp[1] = spriteSheet.get(0).grabImage(width * 2, height, width, height);
@@ -55,10 +60,20 @@ public class Textures {
 		virusHit[7] = spriteSheet.get(1).grabImage(width * 7, height * 2, width, height);
 		virusHit[8] = spriteSheet.get(1).grabImage(width * 8, height * 2, width, height);
 		virusHit[9] = spriteSheet.get(1).grabImage(width * 9, height * 2, width, height);
+		
+		newGameButton[0] = spriteSheet.get(4).grabImage(0, 0, 200, 72);
+		newGameButton[1] = spriteSheet.get(4).grabImage(200, 0, 200, 72);
+		
+		helpButton[0] = spriteSheet.get(4).grabImage(0, 72, 200, 72);
+		helpButton[1] = spriteSheet.get(4).grabImage(200, 72, 200, 72);
+		
+		exitButton[0] = spriteSheet.get(4).grabImage(0, 144, 200, 71);
+		exitButton[1] = spriteSheet.get(4).grabImage(200, 144, 200, 71);
 
 		infected = spriteSheet.get(2).grabImage(0, 0, width, height);
 		virusDead = spriteSheet.get(1).grabImage(width * 19, height, width, height);
 		menuBackground = spriteSheet.get(3).grabImage(0, 0, frameWidth, frameHeight);
+		cure = spriteSheet.get(5).grabImage(0, 0, 24, 24);
 	}
 
 }

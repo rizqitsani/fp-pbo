@@ -10,6 +10,7 @@ import java.util.Random;
 import com.feviro.Game;
 import com.feviro.GameArea;
 import com.feviro.objects.Bullet;
+import com.feviro.objects.Cure;
 import com.feviro.objects.Infected;
 import com.feviro.objects.Player;
 import com.feviro.objects.Virus;
@@ -21,6 +22,7 @@ public class GameState extends State {
 	private List<Infected> infectedList = new ArrayList<Infected>();
 	private List<Virus> virusList = new ArrayList<Virus>();
 	private List<Bullet> bulletList = new ArrayList<Bullet>();
+	private List<Cure> cureList = new ArrayList<Cure>();
 
 	public GameState(Game game) {
 		super(game);
@@ -41,6 +43,13 @@ public class GameState extends State {
 			int x = random.nextInt(300) + 40;
 			int y = random.nextInt(300) + 40;
 			virusList.add(new Virus(x, y, 1, this.game));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			Random random = new Random();
+			int x = random.nextInt(300) + 40;
+			int y = random.nextInt(300) + 40;
+			cureList.add(new Cure(x, y, this.game));
 		}
 	}
 
@@ -80,6 +89,11 @@ public class GameState extends State {
 			}
 			bulletList.get(i).render(g);
 		}
+		
+		for (int i = 0; i < cureList.size(); i++) {
+			cureList.get(i).render(g);
+		}
+		
 	}
 
 	@Override
