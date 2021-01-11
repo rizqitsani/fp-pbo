@@ -47,8 +47,8 @@ public class Virus extends GameObject {
 
 	public void render(Graphics g) {
 		g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, this.width, this.height, null);
-//		g.setColor(Color.GREEN);
-//		g.drawRect((int) this.x, (int) this.y, width, height);
+		// g.setColor(Color.GREEN);
+		// g.drawRect((int) this.x, (int) this.y, width, height);
 	}
 
 	private BufferedImage getCurrentAnimationFrame() {
@@ -84,26 +84,6 @@ public class Virus extends GameObject {
 		} else {
 			this.speedY = 0;
 		}
-		// float angleInRadius = (float) Math.atan((playerY - this.getY()) / (playerX -
-		// this.getX()));
-		// System.out.println(angleInRadius);
-		// System.out.println(Math.sin(angleInRadius) + " " + Math.cos(angleInRadius));
-
-		// if(this.x > playerX) {
-		// this.speedX = (float) (this.baseSpeed * Math.cos(angleInRadius) * -1);
-		// } else if(this.x < playerX) {
-		// this.speedX = (float) (this.baseSpeed * Math.cos(angleInRadius));
-		// } else {
-		// this.speedX = 0;
-		// }
-		//
-		// if(this.y > playerY) {
-		// this.speedY = (float) (this.baseSpeed * Math.sin(angleInRadius) * -1);
-		// } else if(this.y < playerY) {
-		// this.speedY = (float) (this.baseSpeed * Math.sin(angleInRadius));
-		// } else {
-		// this.speedY = 0;
-		// }
 	}
 
 	public boolean collision(Bullet bullet) {
@@ -131,6 +111,8 @@ public class Virus extends GameObject {
 		}
 		return false;
 	}
+
+	// Getters & Setters
 
 	public float getX() {
 		return x;
@@ -163,4 +145,5 @@ public class Virus extends GameObject {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
 }

@@ -35,22 +35,22 @@ public class GameArea {
     g.drawRect(minX, minY, maxX - minX - 1, maxY - minY - 1);
   }
 
+  // Getters & Setters
+
   public int getMinX() {
-	return minX;
+    return minX;
   }
 
   public int getMaxX() {
-	return maxX;
+    return maxX;
   }
 
   public int getMinY() {
-	return minY;
+    return minY;
   }
 
   public int getMaxY() {
-	return maxY;
+    return maxY;
   }
-  
-  
 
 }

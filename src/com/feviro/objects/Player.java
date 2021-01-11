@@ -26,7 +26,7 @@ public class Player extends GameObject {
   private Animation animDown;
   private Animation animLeft;
   private Animation animRight;
-  
+
   // Direction
   private String currentDirection;
 
@@ -56,16 +56,16 @@ public class Player extends GameObject {
     animRight.tick();
 
     if (this.mana <= MAX_MANA) {
-    	this.mana += 0.01f;    	
+      this.mana += 0.01f;
     }
-    
+
     if (this.mana > 0) {
-    	if (isBoosted) {
-    		speedX *= this.boostSpeed;
-    		speedY *= this.boostSpeed;
-    	}    	
+      if (isBoosted) {
+        speedX *= this.boostSpeed;
+        speedY *= this.boostSpeed;
+      }
     }
-    
+
     this.x += (speedX * baseSpeed);
     this.y += (speedY * baseSpeed);
 
@@ -79,7 +79,7 @@ public class Player extends GameObject {
 
   public void render(Graphics g) {
     g.drawImage(getCurrentAnimationFrame(), (int) this.x, (int) this.y, (int) this.width, (int) this.height, null);
-    
+
     // Healthbar
     g.setColor(Color.GRAY);
     g.fillRect(20, 535, 250, 40);
@@ -87,7 +87,7 @@ public class Player extends GameObject {
     g.fillRect(20, 535, (int) (health * 2.5), 40);
     g.setColor(Color.WHITE);
     g.drawRect(20, 535, 250, 40);
-    
+
     // Manabar
     g.setColor(Color.GRAY);
     g.fillRect(530, 535, 250, 40);
@@ -117,22 +117,6 @@ public class Player extends GameObject {
     }
   }
 
-  public float getX() {
-    return x;
-  }
-
-  public float getY() {
-    return y;
-  }
-  
-  public float getWidth() {
-	  return width;
-  }
-  
-  public float getHeight() {
-	  return height;
-  }
-
   public void moveLeft() {
     this.speedX = -1;
     this.currentDirection = "LEFT";
@@ -160,47 +144,47 @@ public class Player extends GameObject {
   public void moveYStop() {
     this.speedY = 0;
   }
-  
+
   public void boost() {
-	  this.mana -= 1f; 
-	  this.isBoosted = true;
+    this.mana -= 1f;
+    this.isBoosted = true;
   }
-  
+
   public void boostStop() {
-	  this.isBoosted = false;
-  }  
+    this.isBoosted = false;
+  }
 
   public void shoot(List<Bullet> list) {
-	int bulletAngle = 0;
-	float startX = 0;
-	float startY = 0;
-	switch (currentDirection) {
-	case "UP":
-		bulletAngle = -90; 
-		startX = this.x + (this.width / 2);
-		startY = this.y;
-		break;
-	case "DOWN":
-		bulletAngle = 90;
-		startX = this.x + (this.width / 2);
-		startY = this.y + this.height;
-		break;
-	case "LEFT":
-		bulletAngle = 180; 
-		startX = this.x;
-		startY = this.y + (this.height / 2);
-		break;
-	case "RIGHT":
-		bulletAngle = 0;
-		startX = this.x + this.width;
-		startY = this.y + (this.height / 2);
-		break;
-	default:
-		break;
-	}
-	
-	list.add(new Bullet(startX, startY, 5, 5, bulletAngle, Color.RED, game));
-    
+    int bulletAngle = 0;
+    float startX = 0;
+    float startY = 0;
+    switch (currentDirection) {
+      case "UP":
+        bulletAngle = -90;
+        startX = this.x + (this.width / 2);
+        startY = this.y;
+        break;
+      case "DOWN":
+        bulletAngle = 90;
+        startX = this.x + (this.width / 2);
+        startY = this.y + this.height;
+        break;
+      case "LEFT":
+        bulletAngle = 180;
+        startX = this.x;
+        startY = this.y + (this.height / 2);
+        break;
+      case "RIGHT":
+        bulletAngle = 0;
+        startX = this.x + this.width;
+        startY = this.y + (this.height / 2);
+        break;
+      default:
+        break;
+    }
+
+    list.add(new Bullet(startX, startY, 5, 5, bulletAngle, Color.RED, game));
+
   }
 
   public void collision(GameArea area) {
@@ -231,29 +215,35 @@ public class Player extends GameObject {
     if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
       this.health -= 0.2f;
     }
-
-    // if (this.x < playerMinX) {
-    // this.x = playerMinX;
-    // } else if (this.x > playerMaxX) {
-    // this.x = playerMaxX;
-    // }
-    //
-    // if (this.y < playerMinY) {
-    // this.y = playerMinY;
-    // } else if (this.y > playerMaxY) {
-    // this.y = playerMaxY;
-    // }
   }
-  
-  public void collision(Virus virus) {
-	float playerMinX = virus.getX();
-	float playerMinY = virus.getY();
-	float playerMaxX = virus.getX() + virus.getWidth();
-	float playerMaxY = virus.getY() + virus.getWidth();
 
-	if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
-	  this.health -= 0.25f;
-	}
+  public void collision(Virus virus) {
+    float playerMinX = virus.getX();
+    float playerMinY = virus.getY();
+    float playerMaxX = virus.getX() + virus.getWidth();
+    float playerMaxY = virus.getY() + virus.getWidth();
+
+    if (this.x > playerMinX && this.x < playerMaxX && this.y > playerMinY && this.y < playerMaxY) {
+      this.health -= 0.25f;
+    }
+  }
+
+  // Getters
+
+  public float getX() {
+    return x;
+  }
+
+  public float getY() {
+    return y;
+  }
+
+  public float getWidth() {
+    return width;
+  }
+
+  public float getHeight() {
+    return height;
   }
 
 }

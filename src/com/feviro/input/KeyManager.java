@@ -6,9 +6,9 @@ import java.awt.event.KeyEvent;
 import com.feviro.states.State;
 
 public class KeyManager extends KeyAdapter {
-	
+
 	public KeyManager() {
-		
+
 	}
 
 	public void keyPressed(KeyEvent e) {

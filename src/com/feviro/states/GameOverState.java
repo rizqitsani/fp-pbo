@@ -10,12 +10,10 @@ public class GameOverState extends State {
 
 	public GameOverState(Game game) {
 		super(game);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -34,7 +32,6 @@ public class GameOverState extends State {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -8,8 +8,10 @@ public class Textures {
 
 	private static final int width = 48, height = 48, frameWidth = 800, frameHeight = 600;
 
-	public static BufferedImage infected, virusDead, menuBackground, cure, gameBackground, winBackground, gameOverBackground;
-	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit, newGameButton, helpButton, exitButton, helpBackground;
+	public static BufferedImage infected, virusDead, menuBackground, cure, gameBackground, winBackground,
+			gameOverBackground;
+	public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight, virusHit, newGameButton, helpButton,
+			exitButton, helpBackground;
 
 	private static List<SpriteSheet> spriteSheet = new ArrayList<SpriteSheet>();
 
@@ -66,16 +68,16 @@ public class Textures {
 		virusHit[7] = spriteSheet.get(1).grabImage(width * 7, height * 2, width, height);
 		virusHit[8] = spriteSheet.get(1).grabImage(width * 8, height * 2, width, height);
 		virusHit[9] = spriteSheet.get(1).grabImage(width * 9, height * 2, width, height);
-		
+
 		newGameButton[0] = spriteSheet.get(4).grabImage(0, 0, 200, 72);
 		newGameButton[1] = spriteSheet.get(4).grabImage(200, 0, 200, 72);
-		
+
 		helpButton[0] = spriteSheet.get(4).grabImage(0, 72, 200, 72);
 		helpButton[1] = spriteSheet.get(4).grabImage(200, 72, 200, 72);
-		
+
 		exitButton[0] = spriteSheet.get(4).grabImage(0, 144, 200, 71);
 		exitButton[1] = spriteSheet.get(4).grabImage(200, 144, 200, 71);
-		
+
 		helpBackground[0] = spriteSheet.get(7).grabImage(0, 0, frameWidth, frameHeight);
 		helpBackground[1] = spriteSheet.get(8).grabImage(0, 0, frameWidth, frameHeight);
 

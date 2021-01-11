@@ -1,6 +1,7 @@
 package com.feviro;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -9,15 +10,19 @@ public class Main {
 	public final String TITLE = "Feviro";
 
 	public static void main(String[] args) {
-		Game game = new Game(WIDTH, HEIGHT);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				Game game = new Game(WIDTH, HEIGHT);
 
-		JFrame frame = new JFrame("Feviro");
-		frame.add(game);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+				JFrame frame = new JFrame("Feviro");
+				frame.add(game);
+				frame.pack();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setResizable(false);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+			}
+		});
 	}
 
 }

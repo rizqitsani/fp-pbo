@@ -25,7 +25,7 @@ public class Infected extends GameObject {
   public void render(Graphics g) {
     g.drawImage(Textures.infected, (int) this.x, (int) this.y, this.width, this.height, null);
     g.setColor(Color.RED);
-	g.drawRect((int) this.x, (int) this.y, width, height);
+    g.drawRect((int) this.x, (int) this.y, width, height);
   }
 
   public float getMinX() {

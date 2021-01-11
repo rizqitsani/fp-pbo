@@ -14,7 +14,6 @@ public class WinState extends State {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -33,7 +32,6 @@ public class WinState extends State {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

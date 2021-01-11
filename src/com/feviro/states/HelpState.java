@@ -7,7 +7,7 @@ import com.feviro.Game;
 import com.feviro.gfx.Textures;
 
 public class HelpState extends State {
-	
+
 	private int index;
 
 	public HelpState(Game game) {
@@ -16,7 +16,7 @@ public class HelpState extends State {
 
 	@Override
 	public void tick() {
-		
+
 	}
 
 	@Override
@@ -27,8 +27,8 @@ public class HelpState extends State {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_ENTER) {
-			if(index == 1)
+		if (key == KeyEvent.VK_ENTER) {
+			if (index == 1)
 				State.setCurrentState(game.getMenuState());
 			else
 				index++;
@@ -37,7 +37,7 @@ public class HelpState extends State {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+
 	}
 
 }

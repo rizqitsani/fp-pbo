@@ -30,7 +30,7 @@ public class Game extends JPanel implements Runnable {
 	private State gameOverState;
 	private State winState;
 	private State helpState;
-	
+
 	// Input
 	private KeyManager keyManager;
 	private MouseManager mouseManager;
@@ -38,7 +38,7 @@ public class Game extends JPanel implements Runnable {
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
-		
+
 		this.keyManager = new KeyManager();
 		this.mouseManager = new MouseManager();
 
@@ -46,7 +46,6 @@ public class Game extends JPanel implements Runnable {
 		this.setMaximumSize(new Dimension(width, height));
 		this.setMinimumSize(new Dimension(width, height));
 
-		
 		this.setFocusable(true);
 
 		start();
@@ -56,7 +55,7 @@ public class Game extends JPanel implements Runnable {
 		this.addKeyListener(keyManager);
 		this.addMouseListener(mouseManager);
 		this.addMouseMotionListener(mouseManager);
-		
+
 		Textures.init();
 
 		gameState = new GameState(this);
@@ -142,6 +141,8 @@ public class Game extends JPanel implements Runnable {
 		}
 	}
 
+	// Getters & Setters
+
 	public int getWidth() {
 		return width;
 	}
@@ -157,15 +158,15 @@ public class Game extends JPanel implements Runnable {
 	public State getMenuState() {
 		return menuState;
 	}
-	
+
 	public State getGameOverState() {
 		return gameOverState;
 	}
-	
+
 	public State getWinState() {
 		return winState;
 	}
-	
+
 	public State getHelpState() {
 		return helpState;
 	}
@@ -177,7 +178,5 @@ public class Game extends JPanel implements Runnable {
 	public MouseManager getMouseManager() {
 		return mouseManager;
 	}
-	
-	
 
 }
