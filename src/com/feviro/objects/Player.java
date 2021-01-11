@@ -94,6 +94,14 @@ public class Player extends GameObject {
   public float getY() {
     return y;
   }
+  
+  public float getWidth() {
+	  return width;
+  }
+  
+  public float getHeight() {
+	  return height;
+  }
 
   public void moveLeft() {
     this.speedX = -1;

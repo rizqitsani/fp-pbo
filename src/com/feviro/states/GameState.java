@@ -33,22 +33,22 @@ public class GameState extends State {
 
 		for (int i = 0; i < 5; i++) {
 			Random random = new Random();
-			int x = random.nextInt(300) + 40;
-			int y = random.nextInt(300) + 40;
+			int x = random.nextInt(game.getWidth());
+			int y = random.nextInt(game.getHeight());
 			infectedList.add(new Infected(x, y, this.game));
 		}
 
 		for (int i = 0; i < 7; i++) {
 			Random random = new Random();
-			int x = random.nextInt(300) + 40;
-			int y = random.nextInt(300) + 40;
+			int x = random.nextInt(game.getWidth());
+			int y = random.nextInt(game.getHeight());
 			virusList.add(new Virus(x, y, 0.3f, this.game));
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			Random random = new Random();
-			int x = random.nextInt(300) + 40;
-			int y = random.nextInt(300) + 40;
+			int x = random.nextInt(game.getWidth());
+			int y = random.nextInt(game.getHeight());
 			cureList.add(new Cure(x, y, this.game));
 		}
 	}
@@ -76,8 +76,10 @@ public class GameState extends State {
 
 		for (int i = 0; i < virusList.size(); i++) {
 			for (int j = 0; j < bulletList.size(); j++) {
-				if (virusList.get(i).collision(bulletList.get(j))) {
-					bulletList.remove(j);
+				if(virusList.get(i).checkIsLive()) {
+					if (virusList.get(i).collision(bulletList.get(j))) {
+						bulletList.remove(j);
+					}					
 				}
 			}
 			virusList.get(i).render(g);
@@ -91,6 +93,10 @@ public class GameState extends State {
 		}
 		
 		for (int i = 0; i < cureList.size(); i++) {
+			cureList.get(i).collision(player);
+			if(cureList.get(i).checkIsObtained()) {
+				cureList.remove(i);
+			}
 			cureList.get(i).render(g);
 		}
 		
