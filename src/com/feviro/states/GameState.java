@@ -27,7 +27,7 @@ public class GameState extends State {
 	public GameState(Game game) {
 		super(game);
 
-		this.player = new Player(game.getWidth() / 2, game.getHeight() - 40, 1.5f, this.game);
+		this.player = new Player(game.getWidth() / 2, game.getHeight() - 40, 1.5f, 1.02f, this.game);
 
 		this.area = new GameArea(0, 0, game.getWidth(), game.getHeight(), Color.BLACK, Color.WHITE);
 
@@ -114,6 +114,9 @@ public class GameState extends State {
 		} else if (key == KeyEvent.VK_DOWN) {
 			player.moveDown();
 		}
+		if (key == KeyEvent.VK_SHIFT) {
+			player.boost();
+		}
 	}
 
 	@Override
@@ -129,6 +132,9 @@ public class GameState extends State {
 			player.moveYStop();
 		} else if (key == KeyEvent.VK_SPACE) {
 			player.shoot(bulletList);
+		}
+		if (key == KeyEvent.VK_SHIFT) {
+			player.boostStop();
 		}
 	}
 

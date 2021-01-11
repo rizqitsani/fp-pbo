@@ -13,10 +13,11 @@ import com.feviro.states.State;
 
 public class Player extends GameObject {
   private float width, height;
-  private float baseSpeed;
+  private float baseSpeed, boostSpeed;
   private float speedX;
   private float speedY;
   private int health;
+  private boolean isBoosted;
 
   // Animations
   private Animation currentAnim;
@@ -28,9 +29,10 @@ public class Player extends GameObject {
   // Direction
   private String currentDirection;
 
-  public Player(float x, float y, float baseSpeed, Game game) {
+  public Player(float x, float y, float baseSpeed, float boostSpeed, Game game) {
     super(x, y, game);
     this.baseSpeed = baseSpeed;
+    this.boostSpeed = boostSpeed;
     this.width = 48;
     this.height = 48;
     this.health = 100;
@@ -51,6 +53,12 @@ public class Player extends GameObject {
     animLeft.tick();
     animRight.tick();
 
+    if (isBoosted) {
+    	speedX *= this.boostSpeed;
+    	speedY *= this.boostSpeed;
+    }
+    System.out.println(speedX);
+    
     this.x += (speedX * baseSpeed);
     this.y += (speedY * baseSpeed);
 
@@ -130,6 +138,14 @@ public class Player extends GameObject {
   public void moveYStop() {
     this.speedY = 0;
   }
+  
+  public void boost() {
+	  this.isBoosted = true;
+  }
+  
+  public void boostStop() {
+	  this.isBoosted = false;
+  }  
 
   public void shoot(List<Bullet> list) {
 	int bulletAngle = 0;
