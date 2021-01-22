@@ -49,7 +49,11 @@ public class Player extends GameObject {
     currentDirection = "UP";
   }
 
-  public void tick(GameArea area, List<Infected> infectedList) {
+  public void tick() {
+
+  }
+
+  public void tick(GameArea area, List<GameObject> objectList) {
     animUp.tick();
     animDown.tick();
     animLeft.tick();
@@ -71,8 +75,9 @@ public class Player extends GameObject {
     this.y += (speedY * baseSpeed);
 
     this.collision(area);
-    for (Infected infected : infectedList) {
-      this.collision(infected);
+    for (GameObject o : objectList) {
+      if (o instanceof Infected)
+        this.collision((Infected) o);
     }
 
     checkIsLive();
@@ -154,7 +159,7 @@ public class Player extends GameObject {
     this.isBoosted = false;
   }
 
-  public void shoot(List<Bullet> list) {
+  public void shoot(List<GameObject> list) {
     int bulletAngle = 0;
     float startX = 0;
     float startY = 0;

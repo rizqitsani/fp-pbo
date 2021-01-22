@@ -12,6 +12,7 @@ import com.feviro.GameArea;
 import com.feviro.gfx.Textures;
 import com.feviro.objects.Bullet;
 import com.feviro.objects.Cure;
+import com.feviro.objects.GameObject;
 import com.feviro.objects.Infected;
 import com.feviro.objects.Player;
 import com.feviro.objects.Virus;
@@ -20,10 +21,7 @@ public class GameState extends State {
 
 	private GameArea area;
 	private Player player;
-	private List<Infected> infectedList = new ArrayList<Infected>();
-	private List<Virus> virusList = new ArrayList<Virus>();
-	private List<Bullet> bulletList = new ArrayList<Bullet>();
-	private List<Cure> cureList = new ArrayList<Cure>();
+	private List<GameObject> objectList = new ArrayList<GameObject>();
 
 	private Random random;
 
@@ -38,35 +36,46 @@ public class GameState extends State {
 		for (int i = 0; i < 5; i++) {
 			int x = random.nextInt(game.getWidth());
 			int y = random.nextInt(game.getHeight());
-			infectedList.add(new Infected(x, y, this.game));
+			// infectedList.add(new Infected(x, y, this.game));
+			objectList.add(new Infected(x, y, this.game));
 		}
 
 		for (int i = 0; i < 7; i++) {
 			int x = random.nextInt(game.getWidth());
 			int y = random.nextInt(game.getHeight());
-			virusList.add(new Virus(x, y, 0.3f, this.game));
+			// virusList.add(new Virus(x, y, 0.3f, this.game));
+			objectList.add(new Virus(x, y, 0.3f, this.game));
 		}
 
 		for (int i = 0; i < 5; i++) {
 			int x = random.nextInt(game.getWidth());
 			int y = random.nextInt(game.getHeight());
-			cureList.add(new Cure(x, y, this.game));
+			// cureList.add(new Cure(x, y, this.game));
+			objectList.add(new Cure(x, y, this.game));
 		}
+
+		objectList.add(player);
 	}
 
 	@Override
 	public void tick() {
-		player.tick(area, infectedList);
+		int cureCounter = 0;
 
-		for (Bullet bullet : bulletList) {
-			bullet.tick(area);
+		for (GameObject o : objectList) {
+			if (o instanceof Player) {
+				player.tick(area, objectList);
+			} else if (o instanceof Bullet) {
+				Bullet bullet = (Bullet) o;
+				bullet.tick(area);
+			} else if (o instanceof Virus) {
+				Virus virus = (Virus) o;
+				virus.tick(player);
+			} else if (o instanceof Cure) {
+				cureCounter++;
+			}
 		}
 
-		for (Virus virus : virusList) {
-			virus.tick(player);
-		}
-
-		if (cureList.isEmpty()) {
+		if (cureCounter == 0) {
 			State.setCurrentState(game.getWinState());
 		}
 	}
@@ -75,40 +84,44 @@ public class GameState extends State {
 	public void render(Graphics g) {
 		g.drawImage(Textures.gameBackground, 0, 0, game.getWidth(), game.getHeight(), null);
 
-		for (int i = 0; i < infectedList.size(); i++) {
-			infectedList.get(i).render(g);
-		}
+		for (GameObject o : objectList) {
+			if (o instanceof Player) {
+				player.render(g);
+			} else if (o instanceof Bullet) {
+				Bullet bullet = (Bullet) o;
+				if (bullet.collision(area)) {
+					objectList.remove(bullet);
+				}
+				bullet.render(g);
+			} else if (o instanceof Virus) {
+				Virus virus = (Virus) o;
 
-		for (int i = 0; i < virusList.size(); i++) {
-			for (int j = 0; j < bulletList.size(); j++) {
-				if (virusList.get(i).checkIsLive()) {
-					if (virusList.get(i).collision(bulletList.get(j))) {
-						bulletList.remove(j);
+				for (GameObject b : objectList) {
+					if (b instanceof Bullet) {
+						if (virus.checkIsLive()) {
+							if (virus.collision((Bullet) b)) {
+								objectList.remove(b);
+							}
+						}
 					}
 				}
-			}
-			if (virusList.get(i).checkIsLive()) {
-				player.collision(virusList.get(i));
-			}
-			virusList.get(i).render(g);
-		}
 
-		for (int i = 0; i < bulletList.size(); i++) {
-			if (bulletList.get(i).collision(area)) {
-				bulletList.remove(i);
+				if (virus.checkIsLive()) {
+					player.collision(virus);
+				}
+				virus.render(g);
+			} else if (o instanceof Cure) {
+				Cure cure = (Cure) o;
+				cure.collision(player);
+				if (cure.checkIsObtained()) {
+					objectList.remove(cure);
+				}
+				cure.render(g);
+			} else if (o instanceof Infected) {
+				Infected infected = (Infected) o;
+				infected.render(g);
 			}
-			bulletList.get(i).render(g);
 		}
-
-		for (int i = 0; i < cureList.size(); i++) {
-			cureList.get(i).collision(player);
-			if (cureList.get(i).checkIsObtained()) {
-				cureList.remove(i);
-			}
-			cureList.get(i).render(g);
-		}
-
-		player.render(g);
 
 	}
 
@@ -141,7 +154,7 @@ public class GameState extends State {
 		} else if (key == KeyEvent.VK_DOWN) {
 			player.moveYStop();
 		} else if (key == KeyEvent.VK_SPACE) {
-			player.shoot(bulletList);
+			player.shoot(objectList);
 		}
 		if (key == KeyEvent.VK_SHIFT) {
 			player.boostStop();

@@ -1,8 +1,10 @@
 package com.feviro.objects;
 
+import java.awt.Graphics;
+
 import com.feviro.Game;
 
-public class GameObject {
+public abstract class GameObject {
 
 	protected float x, y;
 	protected Game game;
@@ -28,5 +30,7 @@ public class GameObject {
 	public void setY(float y) {
 		this.y = y;
 	}
+
+	public abstract void render(Graphics g);
 
 }
